@@ -1,0 +1,72 @@
+{% extends "generics/course_generic.html" %}
+
+{% block left %}
+{% endblock %}
+
+
+{% block right %}
+<div class="col span-12-of-12">
+<!--    MAIN CONTENTS OF WEBSITE-->
+<h1>
+  PICK YOUR COURSE
+</h1>
+{% for course in courses %}
+    <div class="pagination-item-display">
+        <div class="row">   
+            <div class="col span-1-of-2">
+                <img src="/{{course.program.cover}}" alt="{{course.name}}" style="max-width:80%; height:auto;">
+            </div>
+             <div class="col span-1-of-2">
+                 <h2>{{course.program.description|slice:":30" }}</h2>
+                 <p>{{course.program.description|slice:":400"|add:"..."}}</p>
+            </div>
+        </div>
+        <div class="row">
+          {% for p in course.students.all %}
+            {{p.image_tag}}
+          {% endfor %}
+        </div>
+        <div class="row">
+            <div class="col span-3-of-3">
+              {% if not user in course.students.all %}
+                <a class="btn btn-pagination" href="{% url 'Course:course_register' course.pk %}">Register to this course</a>
+              {% else %}
+                 <a class="btn btn-pagination red" href="{% url 'Course:course_detail' course.pk %}">Already signed, show details!</a>
+              {% endif %}
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+
+
+{% if courses.has_other_pages %}
+  <ul class="pagination">
+    {% if courses.has_previous %}
+      <li><a href="?page={{ courses.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="pagination-disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in courses.paginator.page_range %}
+      {% if courses.number == i %}
+        <li class="pagination-active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if courses.has_next %}
+      <li><a href="?page={{ courses.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="pagination-disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+
+
+
+
+</div> <!--END OF OVERVIEW CONTAINER-->
+
+<!--    END OF MAIN CONTENTS OF WEBSITE-->
+</div> <!--    span 7 of 8 column end    -->
+{% endblock %}

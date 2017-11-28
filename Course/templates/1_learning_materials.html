@@ -1,0 +1,57 @@
+{% extends "generics/course_generic.html" %}
+
+{% block left %}
+      {% include "includes/header_secondary.html" with section='learning_materials'  bullet_point='learning_materials_2' %}
+{% endblock %}
+
+{% block right %}
+	<div class="col span-10-of-12">
+	<!--    MAIN CONTENTS OF WEBSITE-->
+	<h4 style="text-align: center;">Please browse through learning materials below and then proceed to Quiz section!</h4>
+	{% for f in course.program.files.all %}
+		<div class="tutorial" id="tutorial-1">
+		    <div class="tutorial-header">
+		        {{f.desc}}
+		    </div>
+		    <div class="tutorial-content">
+		        <embed src="/{{f.file}}"/>
+		    </div>
+		</div>
+	{% endfor %}
+	<!--    END OF MAIN CONTENTS OF WEBSITE-->
+	</div> <!--    span 7 of 8 column end    -->
+{% endblock %}
+{% block additional_scripts %}
+	<script>
+	(function () {
+	    var toggle_tutorial = function(ev){
+	        /*This function checks which element was clicked. 
+	        If element contains certain class then an active class is added,
+	        which results in different elements displayed on a webpage.*/
+	        var selected_class = ev.target.className;
+	        if(selected_class !== "tutorial-header"){
+	            return;
+	        }
+	        //Getting tutorial-content class.
+	        var content_element = ev.target.nextElementSibling;
+	        if(content_element.classList.contains("active")){
+	            content_element.className = "tutorial-content";
+	        }
+	        else{
+	            content_element.className = "tutorial-content active";
+	            content_element.firstChild.style.height = get_height()  + "px";
+	        }
+	    }
+	    document.addEventListener('click', toggle_tutorial, false);
+	    
+	    var get_height = function(){
+	        /*Returns height of a client browswer.*/
+	        var height = window.innerHeight
+	        || document.documentElement.clientHeight
+	        || document.body.clientHeight;
+	        return height;
+	    }
+	    
+	})();
+	</script>
+{% endblock %}

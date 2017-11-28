@@ -1,0 +1,23 @@
+{
+	"name":"Quiz1 name",
+	"questions":[
+		{
+			"question":"Does scrum have rules, or just guidelines?",
+			"answers":[
+				"Scrum has a few simple rules",
+				"Scrum has guidelines only, no rules at all."
+			],
+			"correct":"1"
+		},
+		{
+			"question":"When should a retrospective meeting be held?",
+			"answers":[
+				"At the end of each sprint, after the sprint review meeting",
+				"At the end of each sprint, before the sprint review meeting",
+				"Every now and then, when the team wants to improve",
+				"Only at the end of a project"
+			],
+			"correct":"1"
+		}
+	]
+}

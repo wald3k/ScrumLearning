@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+{% include "includes/head_tag_primary.html" %}
+{% include "includes/header_primary.html" %}
+<body>
+<section style="width:50%">
+<h1>Please fill your credentials</h1>
+  <!-- multipart/form-data will handle also uploading images like avatar. -->
+  <form enctype="multipart/form-data" method="POST"  action="#"  >
+    {% csrf_token %}
+    {% for hidden in form.hidden_fields %}
+        {{ hidden }}
+    {% endfor %}
+    {% for field in form.visible_fields %}
+        <p>
+          {{ field.errors }}
+        </p>
+        
+        {{ field.label }}:{{ field }}<br />
+        {{ field.help_text}}<br />
+        {% if field.errors %}<br />
+          <style="color:red;">  <span>{{ field.errors|striptags }}</span> </style>
+        {% endif %}
+    {% endfor %}
+    <input type="submit" name="submit" value="Register user" class="btn btn-info test-button"/>
+  </form>
+  </section>
+</body>
+
+</html> 

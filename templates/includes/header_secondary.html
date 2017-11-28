@@ -1,0 +1,48 @@
+        {% load static %}
+
+        <!-- Section with list of options-->
+             <div class="menu-item alpha {% if section == 'program_description' %} active {% endif %}">
+              <h4><a href="#">Project Name</a></h4>
+              <h3 class="{% if bullet_point == 'program_description_1' %} active {% endif %}"><a href="{% url 'Course:program_description' course.pk %}">{{course.program.name}}</a></h3>
+            </div>
+      
+            <div class="{% if section == 'learning_materials' %} active {% endif %} menu-item">
+              <h4><a href="#">Learning materials</a></h4>
+              <ul>
+                <li class="{% if bullet_point == 'learning_materials_1' %} active {% endif %}">
+                  <a href="{% url 'Course:course_detail' course.pk %}">Scrum E-Learning overview </a>
+                </li>
+                <li class="{% if bullet_point == 'learning_materials_2' %} active {% endif %}"><a href="{% url 'Course:learning_materials' course.pk %}">Learning Materials</a></li>
+                <li class="{% if bullet_point == 'learning_materials_3' %} active {% endif %}"><a href="{% url 'Course:quiz' course.pk %}">Solve Quiz</a></li>
+              </ul>
+            </div>
+            
+            <div class="{% if section == 'project_details' %} active {% endif %} menu-item">
+              <h4><a href="#">Project Details</a></h4>
+              <ul>
+                <li class="{% if bullet_point == 'project_details_1' %} active {% endif %}"><a href="{% url 'Course:roles_in_project' course.pk %}">Roles in a project</a></li>
+                <li class="{% if bullet_point == 'project_details_2' %} active {% endif %}"><a href="{% url 'Course:current_progress' course.pk %}">Current progress</a></li>
+                <li class="{% if bullet_point == 'project_details_3' %} active {% endif %}"><a href="{% url 'Course:product_backlog' course.pk %}">Product Backlog</a></li>
+                <li class="{% if bullet_point == 'project_details_4' %} active {% endif %}"><a href="{% url 'Course:general_discussion' course.pk %}">General Discussion</a></li>
+              </ul>
+            </div>
+      
+            <div class="{% if section == 'sprint' %} active {% endif %} menu-item">
+              <h4><a href="#">Sprint #1</a></h4>
+              <ul>
+                <li class="{% if bullet_point == 'sprint_1' %} active {% endif %}"><a href="{% url 'Course:sprint_backlog' course.pk %}">Sprint backlog</a></li>
+                <li class="{% if bullet_point == 'sprint_2' %} active {% endif %}"><a href="#">Task dashboard</a></li>
+                <li class="{% if bullet_point == 'sprint_3' %} active {% endif %}"><a href="/3_daily_scrum_meeting.html">Discussion panel</a></li>
+                <li class="{% if bullet_point == 'sprint_4' %} active {% endif %}"><a href="#">Retrospection</a></li>
+              </ul>
+            </div>
+      
+            <div class="{% if section == 'project_summary' %} active {% endif %} menu-item">
+              <h4><a href="#">Project Summary</a></h4>
+              <ul>
+               <li class="{% if bullet_point == 'project_summary_1' %} active {% endif %}">Final results</a></li>
+               <li class="{% if bullet_point == 'project_summary_2' %} active {% endif %}"><a href="#">Review from teacher</a></li>
+               <li class="{% if bullet_point == 'project_summary_3' %} active {% endif %}"><a href="#">Student opinions</a></li>
+              </ul>
+            </div>
+    <!--      End of Section with list of options       -->

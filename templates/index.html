@@ -1,0 +1,203 @@
+ {% load static %}
+ <!DOCTYPE html>
+<html lang="en">
+{% include "includes/head_tag_primary.html" %}
+<body>
+{% include "includes/header_primary.html" %}
+    <div class="intro">
+        <div class="row">
+            <div class="col span-1-of-2 box">
+                {% if not user.is_authenticated or user.is_staff %}
+                    <h1>New Scrum E-Learning Users {{user.type}}</h1>
+                    <ul>
+                        <li><i class="ion-checkmark-round"></i>Create your team</li>
+                        <li><i class="ion-checkmark-round"></i>Create your team</li>
+                        <li><i class="ion-checkmark-round"></i>Pick you project</li>
+                        <li><i class="ion-checkmark-round"></i>Create your unique software</li>
+                        <li><i class="ion-checkmark-round"></i>Get response from your tutor.</li>
+                    </ul>
+                    <a class="btn btn-full" href="{% url 'Profile:register_profile' 'student' %}"></i>Register as student</a>
+                    <a class="btn btn-full" href="{% url 'Profile:register_profile' 'teacher' %}"></i>Register as teacher</a>
+                {% elif not user.is_staff %}
+                    <h1>Hello {{ user.username }}</h1>
+                    <ul>
+                        <li>Continue one of your courses</li>
+                    </ul>
+                     <a href="{% url 'Profile:main' %}"><img class="welcome-avatar" src="{{ user.avatar_url }}"></a>
+                     <a class="btn btn-full" href="{% url 'Profile:logout_profile' %}"></i>Log me out</a>
+                    <a class="btn btn-ghost" href="#" onclick="document.getElementById('id01').style.display='block'">Show all possible courses</a>
+                {% endif %}
+            </div>
+
+            <div class="col span-1-of-2 box">
+                {% if not user.is_authenticated or not user.is_staff %}
+                <h1>Teacher section</h1>
+                <ul>
+                    <li><i class="ion-checkmark-round"></i>Invent new projects</li>
+                    <li><i class="ion-checkmark-round"></i>Lead your students</li>
+                    <li><i class="ion-checkmark-round"></i>Solve issues</li>
+                    <li><i class="ion-checkmark-round"></i>Write reviews</li>
+                </ul>
+                <a class="btn btn-ghost" href="/admin/">Login as an Administrator</a>
+                {% else %}
+                    <h1>Hello {{ user.username }}</h1>
+                     <a class="btn btn-ghost" href="/admin/">Show admin panel</a>   
+                    <a class="btn btn-ghost" href="/admin/logout/?next=/">Administrator logout</a>   
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    
+    <div id="scrum-definition">
+        <h1>
+            Scrum is a subset of Agile. It is a lightweight process framework for agile development, and the most widely-used one.        
+        </h1>
+        <h2>TOP KEY BENEFITS OF SCRUM</h2>
+        <ul>
+            <li>Better quality</li>
+            <li>Decreased time to market</li>
+            <li>Increased return on investment</li>
+            <li>Higher customer satisfaction</li>
+            <li>Higher team morale</li>
+            <li>Increased collaboration and ownership</li>
+            <li>More relevant metrics</li>
+            <li>Improved progress visibility and exposure</li>
+            <li>Increased project control</li>
+            <li>Reduced risk</li>
+        </ul>    
+    </div>
+
+    <section id="scrum-details">
+         <div class="scrum-board">
+            <div class="row">
+                <h1>THE SCRUM BOARD</h1>
+                <p>
+                If an inspector determines that one or more aspects of a process deviate outside acceptable limits, and that the resulting product will be unacceptable, the process or the material being processed must be adjusted. An adjustment must be made as soon as possible to minimize further deviation.
+
+                Scrum prescribes four formal events for inspection and adaptation, as described in the Scrum Events section of this document:
+                </p>
+                <ul>
+                    <li>Sprint Planning</li>
+                    <li>Daily Scrum</li>
+                    <li>Sprint Review</li>
+                    <li>Sprint Retrospective</li>     
+                </ul>              
+            </div>
+        </div>
+    </section>
+
+    <section id="scrum-quotes">
+        <div  class="row">
+            <div class="quote-author-img">
+                <img src="static/img/jeff_sutherland.gif">
+                <h2>
+                    Jeff Sutherland - SCRUM creator
+                </h2>
+            </div>
+        </div>
+        <div class = "quote-separator"></div>
+        <div class="row">
+
+        <div class="col span-1-of-3">
+            <div class="box-quote">
+                <h3>
+                    Greatness can’t be imposed; it has to come from within. But it does live within all of us.
+                </h3>
+                <p>
+                    Jeff Sutherland, Scrum: The Art of Doing Twice the Work in Half the Time
+                </p>
+                </div>
+        </div>
+                <div class="col span-1-of-3">
+            <div class="box-quote">
+                <h3>
+                    No Heroics. If you need a hero to get things done, you have a problem. Heroic effort should be viewed as a failure of planning.” 
+                </h3>
+                <p>
+                    Jeff Sutherland, Scrum: The Art of Doing Twice the Work in Half the Time
+                </p>
+                </div>
+        </div>
+                <div class="col span-1-of-3">
+                    <div class="box-quote">
+                        <h3>
+                            That absolute alignment of purpose and trust is something that creates greatness.
+                        </h3>
+                        <p>
+                            Jeff Sutherland, Scrum: The Art of Doing Twice the Work in Half the Time
+                        </p>
+                    </div>
+            </div>
+        </div>
+    </section>
+
+
+
+<!-- Modal forms go here -->
+
+<div id="id02" class="modal">
+        <span onclick="document.getElementById('id01').style.display='none'"
+        class="close" title="Close Modal">&times;</span>
+        <div class="form-horizontal">
+           <form name="LoginForm" action="{% url 'Profile:login_profile' %}" method="post">
+                {% csrf_token %}
+                <input type="text" id="header-username" placeholder="User Name" name ="username"/>
+                <input type="password" id="header-password" placeholder="Password" name="password"/>
+                <button type="submit" class="btn-login">Login</button>
+            </form>
+        </div>
+</div>
+
+
+<div id="id01" class="modal">
+        <span onclick="document.getElementById('id01').style.display='none'"
+        class="close" title="Close Modal">&times;</span>
+          <!-- Modal Content -->
+           <div class="modal-content animate" action="/editor.html">
+                <div class="imgcontainer-courses">
+                    <h1>Choose one of existing courses</h1>
+                    {% for program in programs %}
+                        <div class="modal-game-desc">
+                            <div class="row">   
+                                <div class="col span-1-of-2">
+                                    <img src="{{program.cover}}" alt="Snake">
+                                </div>
+                                 <div class="col span-1-of-2">
+                                      <h2>{{program.description|slice:":30" }}</h2>
+                                     <p>{{program.description|slice:":400"|add:"..."}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col span-3-of-3">
+                                    <a class="btn btn-ghost" href="{% url 'Course:course_choose' program.slug_name %}">Join this course</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div> 
+
+
+<!-- Script for launching modal forms -->
+    <script>
+        //Script for closing ModalForm if user clics outside
+        // Get the modal
+        var modal_login = document.getElementById('id02');
+        var modal_course = document.getElementById('id01');
+        window.onclick = function(event) {
+            if (event.target == modal_login) {
+                modal_login.style.display = "none";
+                }
+            if (event.target == modal_course) {
+                modal_course.style.display = "none";
+                }
+            }
+    </script>
+
+
+
+
+</body>
+</html> 

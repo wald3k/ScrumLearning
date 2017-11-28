@@ -1,0 +1,20 @@
+    {% load static %}
+    <header>
+        <div class="row">
+            <div class=logo>
+               <a href="{% url 'index_page' %}">SCRUM E-Learning</a>  
+            </div>
+            <img src="{% static "img/student.ico" %}" style="height: 50px; width: auto;margin-left: 10px;">
+
+            <div class="main-nav">
+                <ul>
+                    <li><a href="#" onclick="document.getElementById('id02').style.display='block'">Login</a></li>
+                    <li><a href="#" onclick="ajax_test()">Ajax test</a></li>
+                    <li><a href="#scrum-definition" onclick="zenscroll.to(document.getElementById("scrum-definition"))">About Scrum</a></li>
+                    <li><a href="#scrum-details" onclick="zenscroll.to(document.getElementById("scrum-details"))">Scrum Details</a></li>
+                    <li><a href="#scrum-quotes" onclick="zenscroll.to(document.getElementById("scrum-quotes"))">Scrum Quotes</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <div style="margin-top:60px;"></div><!-- Adding some margin after fixed header -->

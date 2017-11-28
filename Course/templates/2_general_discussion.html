@@ -1,0 +1,48 @@
+{% extends "generics/course_generic.html" %}
+{% load static %}
+{% block left %}
+      {% include "includes/header_secondary.html" with section='project_details'  bullet_point='project_details_4' %}
+{% endblock %}
+
+{% block right %}
+
+<div id="shoutbox">
+      {% now "Y-m-d" as todays_date %}
+        <h1>Shoutbox</h1>
+          <ul>
+            <div id="shouts">
+            {% for shout in course.shout_set.all %}
+              <li>
+                <!-- Create a now variable -->
+                <!-- If message was posted today: -->
+                {% if todays_date <= shout.date_created|date:"Y-m-d" %}
+                  {{ shout.date_created|date:'H:i' }}
+                <!-- <span style="color:blue;font-weight:bold;font-size:1.2em;"> {{ shout.author }} </span> -->
+                <!-- Message was posted in previous days: -->
+                {% else %}
+                  {{ shout.date_created|date:'Y-m-d H:i' }}
+                {% endif %}
+                <a href="{% url 'Profile:main' %}"> <img  src="/{{ shout.author.avatar_url }}" class="avatar-medium-circle" title="{{shout.author.username}}" /></a>
+                {{ shout.text }}
+                </br>
+              </li>
+            {% empty %}
+              <li>No shouts added yet.</li>
+            {% endfor %}
+            </div>
+          </ul>
+            <!-- Div holding fields that will be used in process of creating a new Shout object. Please note that some information is processed by
+            JavaScript and then the final post query is sent to the server. -->
+            <div id="new-shout-form" id="#myform" >{% csrf_token %}
+                <label>Add new message below: </label>
+                <input type="text" id="input_shout"/>
+                <input type="submit" id="submit_shout" value="SHOUT!"/>
+            </div>
+
+      </div>  <!-- End of shoutbox-->
+
+
+{% endblock %}
+{% block additional_scripts %}
+<script src="{% static 'js/general_discussion.js' %}"></script>
+{% endblock %}

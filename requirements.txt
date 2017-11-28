@@ -1,0 +1,11 @@
+appdirs==1.4.3
+Django==1.11.3
+django-autoslug==1.9.3
+olefile==0.44
+packaging==16.8
+Pillow==4.2.1
+pyparsing==2.2.0
+pytz==2017.2
+pywin==0.3.1
+six==1.10.0
+virtualenv==15.1.0

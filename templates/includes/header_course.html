@@ -1,0 +1,17 @@
+    {% load static %}
+    <header>
+        <div class="row">
+            <div class=logo>
+               <a href="{% url 'index_page' %}">SCRUM E-Learning</a>
+            </div>
+            <img src="/{{ request.user.avatar_url }}" title="Logged as: {{request.user.username}}" style="height: 50px; width: auto;margin-left: 10px;">
+
+            <div class="main-nav">
+                <ul>
+                    <li><a href="{% url 'Course:course_list' %}">Show registered courses</a></li>
+                    <li><a href="#" onclick="ajax_test()">Ajax test</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <div style="margin-top:60px;"></div><!-- Adding some margin after fixed header -->

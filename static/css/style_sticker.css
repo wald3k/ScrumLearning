@@ -1,0 +1,95 @@
+.sticker{
+    min-height: 100px;
+    min-width: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border: 1px solid #ddd;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
+    background: #ede98b;
+    z-index: 1;
+}
+
+.sticker-header-blue,
+.sticker-header-red,
+.sticker-header-green,
+.sticker-header-orange{
+    height: 25px;
+    width: 100%;
+    text-align: center;
+    /*  Stop users from selecting text inside div*/
+    -webkit-user-select: none; /* Chrome/Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+    /* Rules below not implemented in browsers yet */
+    -o-user-select: none;
+    user-select: none;
+}
+.sticker-header-blue{
+    background: #188ac6;
+}
+.sticker-header-green{
+    background: #18c65b;
+}
+.sticker-header-red{
+    background: #c61818;
+}
+.sticker-header-orange{
+    background: #c69718;
+}
+.sticker textarea{
+    box-sizing: border-box;
+    min-height: 100px;
+    min-width: 100px;
+    background: transparent;
+    border: none;
+}
+.sticker:hover{
+    z-index: 5;
+}
+.sticker-header-blue:hover,
+.sticker-header-red:hover,
+.sticker-header-green:hover,
+.sticker-header-orange:hover{
+    cursor: move;
+}
+/**********************************/
+/*      STICKER CONTAINERS        */
+/**********************************/
+.backlog-container{
+    box-sizing: border-box;
+    min-width: 280px;
+    min-height: 800px;
+    padding: 5%;
+    border: 3px solid #ccc;
+    border-radius: 4%;
+    font-size: 3em;
+    /*  Stop users from selecting text inside div*/
+    -webkit-user-select: none; /* Chrome/Safari */      
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+    /* Rules below not implemented in browsers yet */
+    -o-user-select: none;
+    user-select: none;
+    /*background: rgba(222, 222, 222, 0.24);*/
+}
+#sprint_commited_stories{
+    background: url(/static/img/sprint_commited_stories.png); background-repeat: repeat-xy; opacity: 0.6;
+    background-color: #c0b6ce;
+    background-blend-mode: multiply;
+}
+#sprint_tasks_not_started{
+    background: url(/static/img/sprint_tasks_not_started.png); background-repeat: repeat-xy; opacity: 0.6;
+    background-color: #6979be;
+    background-blend-mode: multiply;
+}
+#sprint_work_in_progress{
+    background: url(/static/img/sprint_work_in_progress.png); background-repeat: repeat-xy; opacity: 0.6;
+    background-color: #cdd15f;
+    background-blend-mode: multiply;
+}
+#sprint_tasks_completed{
+    background: url(/static/img/sprint_tasks_completed.png); background-repeat: repeat-xy; opacity: 0.6;
+    background-color: #24eb43; /* The shade of black that you want*/
+    background-blend-mode: multiply;
+}

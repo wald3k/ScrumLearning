@@ -1,0 +1,85 @@
+{% extends "generics/course_generic.html" %}
+{% load static %}
+{% block left %}
+      {% include "includes/header_secondary.html" with section='project_details'  bullet_point='project_details_2' %}
+{% endblock %}
+
+{% block right %}
+<h1>General information</h1>
+Current stage unlocked: {{progress_current}}<br>
+Stages in total: {{stages_total}}<br>
+The current progress is: {{progress_current_percentage}}%<br>
+Deadline till: {{ deadline }}
+<div id="days-left"></div>
+<h1>Participants of the course</h1>
+<table style="width:50%">
+  <tr>
+    <th align="left">Username</th>
+    <th align="left">Role</th>
+  </tr>
+	{% for p in profiles %}
+	  <tr>
+	    <td>{{ p.username }}</th>
+	    {% if p in course.students_scrum_master.all %}
+	    	<td style="color:blue;">Scrum master</td>
+	    {% elif p in course.students_developer.all %}
+	    	<td style="color:green;">Developer</td>
+	    {% elif p in course.students_product_owner.all %}
+	    	<td style="color:orange;">Product owner</td>
+		{% else %}
+			<td style="color:red;">Role not specified</td>
+	    {% endif %}
+	  </tr>
+	{% endfor %}
+</table>
+
+
+<h1>Stories</h1>
+Sories:<br>
+{% for story in stories %}
+	{{story}}<br>
+{% endfor %}
+Stories in total: {{stories|length}}<br>
+
+
+Stories in Product backlog:
+	{{stories_backlog_primary_0|length}}<br>
+Stories in not included in Product backlog:
+	{{stories_backlog_primary_1|length}}<br>
+Stories included into Sprint#1:
+	{{stories_backlog_secondary_0|length}}<br>
+Stories included into Sprint#2:
+	{{stories_backlog_secondary_1|length}}<br>
+
+
+<h1>Communication</h1>
+Shouts total: {{course.shout_set.all|length}}<br>
+{% for shout in course.shout_set.all %}
+	{{shout}}<br>
+{% endfor %}
+	
+<div class="chart-container" style="height:50vh; width:80vw">
+	<canvas id="myChart" width="700px" height="300px"></canvas>
+</div>
+
+{% endblock %}
+
+{% block additional_scripts %}
+<!-- Using chart.js that is based on MIT license. See more at: http://www.chartjs.org/docs/latest/ -->
+<script src="{% static 'js/third_party/chart.bundle.js' %}"></script>
+
+
+<script type="text/javascript">
+	//Place to grab all the variables. They will be visible as global and ready to be used by other JS scripts.
+   var profiles = JSON.parse("{{ json_profiles|escapejs }}");
+   var shouts = JSON.parse("{{json_shouts|escapejs}}");
+   var deadline = "{{deadline.isoformat}}";
+   var stories_backlog_primary_0 = "{{stories_backlog_primary_0|length}}";
+   var stories_backlog_primary_1 = "{{stories_backlog_primary_1|length}}";
+   var stories_backlog_secondary_0 = "{{stories_backlog_secondary_1|length}}";
+   var stories_backlog_secondary_1 = "{{stories_backlog_secondary_1|length}}";
+
+
+</script>
+<script src="{% static 'js/current_progress.js' %}"></script>
+{% endblock %}

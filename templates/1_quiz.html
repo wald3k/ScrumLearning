@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SCRUM with E-Learning</title>
+     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet"> 
+    <link rel="stylesheet" type="text/css" href="static/css/normalize.css">
+     <link rel="stylesheet" type="text/css" href="static/css/responsivegridsystem.css">
+         <link rel="stylesheet" type="text/css" href="static/css/ionicons.css">
+     <link rel="stylesheet" type="text/css" href="static/css/style.css">
+     <link rel="stylesheet" type="text/css" href="static/css/style_sticker.css">
+</head>
+<body>
+    <header>
+        <div class="row">
+            <div class=logo>
+                <a href="index.html">SCRUM E-Learning</a>
+            </div>
+            <img src="static/img/student.ico" style="height: 50px; width: auto;margin-left: 10px;">
+            <div class="main-nav">
+                <ul>
+                    <li><a href="#" onclick="document.getElementById('id01').style.display='block'">Login</a></li>
+                    <li><a href="#scrum-definition">About Scrum</a></li>
+                    <li><a href="#">About E-Learning</a></li>
+                    <li><a href="#"><i class="ion-grid"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <div class="row">
+        
+     <div class="col span-2-of-12 left-menu">
+        <!--        Section with list of options-->
+             <div class="menu-item alpha">
+              <h4><a href="#">Project Name</a></h4>
+              <p>Short project description.</p>
+            </div>
+      
+            <div class="menu-item active">
+              <h4><a href="#">Learning materials</a></h4>
+              <ul>
+                <li><a href="1_scrum_elearning_overview.html">Scrum E-Learning overview</a></li>
+                <li><a href="1_learning_materials.html">Learning Materials</a></li>
+                <li class="active"><a href="1_quiz.html">Solve Quiz</a></li>
+              </ul>
+            </div>
+            
+            <div class="menu-item">
+              <h4><a href="#">Project Details</a></h4>
+              <ul>
+                <li><a href="2_roles_in_project.html">Roles in a project</a></li>
+                <li><a href="#">Current progress</a></li>
+                <li><a href="2_product_backlog.html">Product Backlog</a></li>
+                <li><a href="#">General Discussion</a></li>
+              </ul>
+            </div>
+      
+            <div class="menu-item">
+              <h4><a href="#">Sprint #1</a></h4>
+              <ul>
+                <li><a href="3_sprint_backlog.html">Sprint backlog</a></li>
+                <li><a href="#">Task dashboard</a></li>
+                <li><a href="3_daily_scrum_meeting.html">Discussion panel</a></li>
+                <li><a href="#">Retrospection</a></li>
+              </ul>
+            </div>
+      
+            <div class="menu-item">
+              <h4><a href="#">Project Summary</a></h4>
+              <ul>
+                <li><a href="#">Final results</a></li>
+                <li><a href="#">Review from teacher</a></li>
+                <li><a href="#">Student opinions</a></li>
+              </ul>
+            </div>
+    <!--      End of Section with list of options       -->
+    </div>
+        
+<div class="col span-10-of-12">
+<!--    MAIN CONTENTS OF WEBSITE-->
+
+<div id="quiz">
+    <h1 id="question"></h1>
+    <button id="btn0" onClick="checkAnswer(this.id)"><span id="answer0" ></span></button>
+    <button id="btn1"><span id="answer1" ></span></button>
+    <button id="btn2"><span id="answer2" ></span></button>
+    <button id="btn3"><span id="answer3" ></span></button>
+    <button class="btn-quiz-prev" type="button" onclick="prevQuestion()">Prev</button>
+    <button class="btn-quiz-next" type="button" onclick="nextQuestion()">Next</button>
+    <button  type="button" onclick="summarizeQuiz()">Summarize Quiz!</button>
+
+    <div class="w3-light-grey">
+      <div id="quiz-progress" class="w3-green" style="width:0%;"></div>
+    </div>
+
+
+</div>     
+    
+<!--    END OF MAIN CONTENTS OF WEBSITE-->
+</div> <!--    span 7 of 8 column end    -->
+
+</div> <!--Main row end-->
+
+<script src="static/js/quiz.js"></script>
+</body>
+</html>

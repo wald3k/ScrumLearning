@@ -1,0 +1,117 @@
+{% extends "generics/course_generic.html" %}
+
+{% block left %}
+      {% include "includes/header_secondary.html" with section='learning_materials'  bullet_point='learning_materials_1' %}
+{% endblock %}
+
+{% block right %}
+  {{course.created}}
+  <div class="col span-10-of-12">
+<!--    MAIN CONTENTS OF WEBSITE-->
+    <div class="overview-container">
+    
+        <div class="row">
+        <h1>Welcome to SCRUM E-Learning system   </h1>
+        </div>
+         
+    <div class="row">
+        <div class="overview-title">
+            How it <span>actually </span> works?
+        </div>
+        <div class="overview-content">
+        Our new SCRUM E-Learning system allows you to not only learn both <span>SCRUM methodology</span> but also brush-up your programming & communication skills!<br>
+        It will allow you to step through a whole <span>Sprint</span> and prepare a piece of code that can actually be shipped or further developed!
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col span-2-of-12">
+            <i class="ion-ios-browsers"></i>
+        </div>
+        <div class="col span-8-of-12">
+            <div class="overview-content">
+                Select one of avaliable courses, such as:
+                <ul>
+                    <li>Snake game</li>
+                    <li>Asteroids</li>
+                    <li>Space invaders</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+        
+    <div class="row">
+        <div class="overview-title">
+            Where to <span>start</span>?
+        </div>
+        <div class="col span-8-of-12">
+            <div class="overview-content">
+                First learn the material on a webpage. It is easily accessible as it is in <span>.PDF</span> format. Then you can test your knowledge by solving a specially prepared <span>QUIZ.</span> After successfully passing our QUIZ, user will be allowed to preceed with the Scrum E-Learing course.
+            </div>
+        </div>
+        <div class="col span-2-of-12">
+            <i class="ion-ios-book"></i> 
+        </div>
+    </div>
+        
+        
+    <div class="row">
+        <div class="overview-title">
+            Let's start the project
+        </div>
+        <div class="col span-8-of-12">
+            <div class="overview-content">
+                Starting a new project is an exciting activity! Our Scrum E-Learing system gives you a great amount of flexibility and tries to simulate real-life problems. That's why you start with <span>assigning scrum-roles </span> to people that are involved in the project!
+            </div>
+        </div>
+        <div class="col span-2-of-12">
+            <i class="ion-ios-people"></i>
+        </div>
+    </div>
+
+    <div class="row">
+        <h4>
+            Decide which stories should be included in the project
+        </h4>
+        <div class="col span-6-of-12">
+            <div class="overview-content">
+                Use Sticker functionality to move user-stories to different sections in <span>product backlog</span>. This step is very intuitive and fun. Just drag user story that you want to its destination place inside product backlog. This step will determine how your project will be evolving. After stories are properly distributed <span>save</span> your progress and proceed to the Sprint!
+            </div>
+        </div>
+        <div class="col span-4-of-12">
+            <img src="static/img/backlog_example.PNG">
+        </div>
+    </div>
+       
+    <div class="row">
+        <div class="overview-title">
+            Scrum in action - your first sprint
+        </div>
+        <div class="col span-8-of-12">
+            <div class="overview-content">
+                Sprint is one of the most important Scrum steps. It is a time period during which team can work on their product. The goal is to be able to present some <span>working</span> part of the code after this time. During this time team members pick stories that they want to work on, so that they can work independently.
+            </div>
+        </div>
+        <div class="col span-2-of-12">
+            <i class="ion-usb"></i>
+        </div>
+    </div>
+               
+    <div class="row">
+        <div class="overview-title">
+            Summarize your Scrum project
+        </div>
+        <div class="col span-2-of-12">
+            <i class="ion-ios-pie icon-left"></i>
+        </div>
+        <div class="col span-8-of-12">
+            <div class="overview-content">
+            Did you succeed in creating your scrum project? Now it is a good time to analyze the results that you've achieved. Analyze percentage of course realized, how well the user stories were organized. Leave your comments of what could be done better!
+            </div>
+        </div>
+    </div> 
+</div> <!--END OF OVERVIEW CONTAINER-->
+
+<!--    END OF MAIN CONTENTS OF WEBSITE-->
+</div> <!--    span 7 of 8 column end    -->
+{% endblock %}

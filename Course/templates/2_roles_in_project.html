@@ -1,0 +1,58 @@
+{% extends "generics/course_generic.html" %}
+{% load static %}
+{% block left %}
+      {% include "includes/header_secondary.html" with section='project_details'  bullet_point='project_details_1' %}
+{% endblock %}
+
+{% block right %}
+
+<div class="user-role-main">
+    <i id="arrow-left"class="ion-arrow-left-c" style="float: left"></i>
+    <img id="img_avatar" src="static/img/user.png" alt="Avatar" class="avatar">
+    <i id="arrow-right" class="ion-arrow-right-c" style="float: right"></i>
+    <div id="user-name" class="user-role-name">
+        user credentials
+    </div>
+    <div class="user-role-detail">
+        <div class="user-role-header">
+            select user role
+        </div>
+        <label><input type="radio" name="role" id="cb_product_owner" >Product Owner</label>
+        <label><input type="radio" name="role" id="cb_scrum_master">Scrum Master</label>
+        <label><input type="radio" name="role" id="cb_developer">Developer Team Member</label>
+        <label><input type="radio" name="role" id="cb_not_assigned">Not assigned yet</label>
+    </div>
+    <div id="section-update">
+        Please set your role above.
+    </div>
+</div>  
+
+
+
+    <div class="editor-actions">
+        <div class="row">
+            <div class="col span-1-of-2">
+                <a id="command_see_details" href="#task-description"><i class="ion-clipboard"></i></a>
+                <h6>See task details</h6>
+                <p>See what is the main goal of the target, what are the restrictions and how end-effect should look like.</p>
+            </div>
+            <div class="col span-1-of-2">
+                <a id="command_submit" href="#"><i class="ion-ios-compose"></i></a>
+               <h6>Submit roles to the server</h6>
+                <p>Send your final submission so that your teacher can give you a feedback.</p>
+            </div>
+        </div> 
+    </div>  
+
+
+{% endblock %}
+{% block additional_scripts %}
+<script type="text/javascript">
+/*Grabbibng some global variables here*/
+       var team ={{ profiles|safe }};
+       var team_scrum_master ={{ profiles_scrum_master|safe }};
+       var team_developer ={{ profiles_developer|safe }};
+       var team_product_owner ={{ profiles_product_owner|safe }};
+</script>
+<script src="{% static 'js/roles_in_project.js' %}"></script>
+{% endblock %}

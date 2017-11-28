@@ -1,0 +1,31 @@
+{% extends "generics/course_generic.html" %}
+{% load static %}
+{% block left %}
+      {% include "includes/header_secondary.html" with section='learning_materials'  bullet_point='learning_materials_3' %}
+{% endblock %}
+
+{% block right %}
+<div id="quiz-start">
+
+<h1 id="already-passed"></h1>
+<h2>Do you want to start this quiz?</h2>
+<a id="btn-start-quiz"class="btn btn-pagination" href="#">Yes, proceed with this quiz now!</a>
+</div>
+<div id="quiz">
+	<h1 id="quiz-status">Do you want to start this quiz?</h1>
+    <h1 id="question"></h1>
+    <button id="btn0" onClick="checkAnswer(this.id)"><span id="answer0" ></span></button>
+    <button id="btn1"><span id="answer1" ></span></button>
+    <button id="btn2"><span id="answer2" ></span></button>
+    <button id="btn3"><span id="answer3" ></span></button>
+    <button id="btn-quiz-prev" class="btn-quiz-prev" type="button">Prev</button>
+    <button id="btn-quiz-next"  class="btn-quiz-next" type="button">Next</button>
+    <button id="summary" type="button">Summarize Quiz!</button>
+    <div class="w3-light-grey">
+	<div id="quiz-progress" class="w3-green" style="width:0%;"></div>
+    </div>
+</div>     
+{% endblock %}
+{% block additional_scripts %}
+<script src="{% static 'js/quiz.js' %}"></script>
+{% endblock %}

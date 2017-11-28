@@ -1,0 +1,80 @@
+ {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+{% include "includes/head_tag_secondary.html" %}
+
+{% block menu %}
+    {% include "includes/header_course.html" %}
+{% endblock %}
+
+<div class="row">      
+    <div class="col span-2-of-12 left-menu">
+{% block left %}
+      {% include "includes/header_secondary.html" with section='learning_materials'  bullet_point='learning_materials_1' %}
+{% endblock %}
+	</div>
+        
+{% block helper %}
+<i id="helper" class="ion-help-circled" onclick="helper()"></i>
+{% include "generics/course_helper_modal.html" %}
+{% endblock %}
+<div class="col span-10-of-12 left-menu">
+{% block right %}
+{% endblock %}
+</div>
+
+</div> <!--Main row end-->
+
+{% block scrum_master %}
+	{% if user in course.students_scrum_master.all %}
+	<!-- If logged user has a role of a scrum master then give him access to lock/unlock stages of a project. -->
+		<div class="row sm-decision-panel">  
+			<h1>Scrum Master Decission Panel</h1>
+			{% if progress_estimated <= course.get_progress %}
+				<i class="ion-unlocked" style="font-size:1.5em;"></i>
+				<a class="btn btn-pagination" onclick="set_course_progress()" href="#">Stage is unlocked</a>
+				<p>Participants can access this part of a course.</p>
+			{% else %}
+				<i class="ion-locked" style="font-size:1.5em;"></i>
+				<a class="btn btn-pagination red" onclick="set_course_progress()" href="#">Unlock this stage</a>
+				<p>So that other users can proceed to the next stage of the project...</p>
+			{% endif %}
+			
+		</div>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+Footer
+{% endblock %}
+<script type="text/javascript">
+	/*Place to grab all the variables. They will be visible as global and ready to be used by other JS scripts.*/
+   var myName = "{{course.program.name}}";
+   var courseId = "{{course.pk}}";
+   var userId = "{{user.pk}}";
+   var userRole = "{{user.role}}";
+   var myProgram = "{{course.program}}"
+   var courseProgressEstimated = "{{progress_estimated}}";
+   var courseProgressCurrent= "{{course.get_progress}}";
+</script>
+<script src="{% static 'js/general_functions.js' %}"></script>
+{% if  course != None and not user in course.students_scrum_master.all %}
+	<!-- For every other user than scrum master, first check if course stage is unlocked and then decide if user can see the contents. -->
+	<script>
+	   isUnlocked = isCourseStageUnlocked(courseProgressEstimated,courseProgressCurrent);
+	   console.log(isUnlocked);
+	   console.log(courseProgressEstimated);
+	   console.log(courseProgressCurrent);
+		if(isUnlocked === true){
+			console.log("This stage has been unlocked, please proceed with your course.");
+		}
+		else{
+			alert("Stage is locked");
+			history.go(-1);
+		}
+	</script>
+{% endif %}
+{% block additional_scripts %}
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,57 @@
+{% extends "generics/course_generic.html" %}
+{% load static %}
+{% block left %}
+      {% include "includes/header_secondary.html" with section='sprint'  bullet_point='sprint_1' %}
+{% endblock %}
+
+{% block right %}
+        
+<div class="col span-10-of-12">
+<!--    MAIN CONTENTS OF WEBSITE-->
+<h1> Choose tasks into sprints!</h1>
+    <p>
+        Prioritize them from the most important at the <span style="font-weight: bold;color: blue;">top</span> of the page to the lease important at the <span style="font-weight: bold;color: red;">bottom</span> of the page.
+    </p>
+<div class="row">
+
+    <div id="product_backlog" class="col span-1-of-3 backlog-container relative" style="background: url(/static/img/product_backlog.png); background-repeat: repeat-xy; opacity: 0.3;">
+<!--  Place for stickers  -->
+    </div>
+    
+    <div id="other_backlog" class="col span-1-of-3 backlog-container" style="background: url(/static/img/release_backlog.png); background-repeat: repeat-xy; opacity: 0.3;">
+<!--  Place for stickers  -->
+    </div>
+    
+</div>
+
+<div>
+<!-- Story form -->
+          Story name:<br>
+          <input type="text" id="new_story_name" value="Type story name here.."><br>
+          Story content:<br>
+           <textarea id ="new_story_content" rows="4" cols="50">Type story text here..</textarea> 
+        <button id="new_story_submit" type="submit" class="save btn btn-default" style="font-size: 2em;font-weight: bold;">Add new sticker</button>
+</div>
+
+    
+<!--    Some buttons go here   -->
+     <div class="editor-actions">
+        <div class="row">
+            <div class="col span-1-of-2">
+                <a id="command_see_details" href="#task-description"><i class="ion-clipboard"></i></a>
+                <h6>See task details</h6>
+                <p>See what is the main goal of the target, what are the restrictions and how end-effect should look like.</p>
+            </div>
+            <div class="col span-1-of-2">
+                <a id="command_save_progress" href="#"><i class="ion-ios-cloud-download-outline "></i></a>
+                <h6>Save your progress</h6>
+                <p>Make sure you save your progress before logging out.</p>
+            </div>
+        </div> 
+    </div>   
+</div>    
+    
+{% endblock %}
+{% block additional_scripts %}
+<script src="{% static 'js/product_backlog.js' %}"></script>
+{% endblock %}
