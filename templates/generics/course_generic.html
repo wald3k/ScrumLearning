@@ -56,6 +56,11 @@ Footer
    var myProgram = "{{course.program}}"
    var courseProgressEstimated = "{{progress_estimated}}";
    var courseProgressCurrent= "{{course.get_progress}}";
+   //only used in backlog related stuff.
+   var backlogNumber= "{{ backlog_number }}"; 
+   var SPRINT_NUMBER = "{{ SPRINT_NUMBER }}"; 
+   var WHICH_BACKLOG = "{{ WHICH_BACKLOG }}";
+
 </script>
 <script src="{% static 'js/general_functions.js' %}"></script>
 {% if  course != None and not user in course.students_scrum_master.all %}

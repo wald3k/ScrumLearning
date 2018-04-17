@@ -83,11 +83,17 @@
         for (var i = 0; i < stickers.length; i++){
             //Sticker Header bouding box
             var bb = stickers[i].barEl.getBoundingClientRect();
-           if(checkBoundingBoxes(bb,productBacklogRect) == true){
+           if(checkBoundingBoxes(bb,log_1) == true){
                stickers[i].updateBacklog(0);
               }
-           else if (checkBoundingBoxes(bb,otherBacklogRect) == true){
+           else if (checkBoundingBoxes(bb,log_2) == true){
               stickers[i].updateBacklog(1);
+           }
+          else if (checkBoundingBoxes(bb,log_3) == true){
+              stickers[i].updateBacklog(2);
+           }
+          else if (checkBoundingBoxes(bb,log_4) == true){
+              stickers[i].updateBacklog(3);
            }
            else{
                stickers[i].updateBacklog(-1);
@@ -135,26 +141,38 @@
                 This function should be called when moving stories over a screen.
             */
             ////////////////////////
-            this.sprintPrev = this.sprint;
-            this.sprint = newBacklog;
-                switch(this.sprintPrev){
+            this.sprintStatePrev = this.sprintState;
+            this.sprintState = newBacklog;
+            switch(this.sprintStatePrev){
                 case 0:
                     this.stickerClassName = "sticker-header-blue";
                     break;
                 case 1:
-                    this.stickerClassName = "sticker-header-green";
+                    this.stickerClassName = "sticker-header-green";                    
+                    break;
+                case 2:
+                    this.stickerClassName = "sticker-header-purple";                    
+                    break;
+                case 3:
+                    this.stickerClassName = "sticker-header-cyan";                    
                     break;
                 default:
                     this.stickerClassName = "sticker-header-orange"
                     break;
             }
             this.barEl.classList.remove(this.stickerClassName);
-            switch(this.sprint){
+            switch(this.sprintState){
                 case 0:
                     this.stickerClassName = "sticker-header-blue";
                     break;
                 case 1:
-                    this.stickerClassName = "sticker-header-green";
+                    this.stickerClassName = "sticker-header-green";                    
+                    break;
+                case 2:
+                    this.stickerClassName = "sticker-header-purple";                    
+                    break;
+                case 3:
+                    this.stickerClassName = "sticker-header-cyan";                    
                     break;
                 default:
                     this.stickerClassName = "sticker-header-orange"
@@ -168,9 +186,10 @@
                 Checks sprintState and sets proper class names in HTML code
                     i.e. color, mouse events, title, content etc.
             */
-            console.log("Drawing " + this.backlog);
+            console.log("Drawing " + this.sprintState);
             this.textareaEl.setAttribute('readonly', 'readonly');
-            switch(this.sprint){
+            console.log("Sprint state = " + this.sprintState)
+            switch(this.sprintState){
                 case 0:
                     this.stickerClassName = "sticker-header-blue";
                     break;
@@ -178,10 +197,10 @@
                     this.stickerClassName = "sticker-header-green";                    
                     break;
                 case 2:
-                    this.stickerClassName = "sticker-header-green";                    
+                    this.stickerClassName = "sticker-header-purple";                    
                     break;
                 case 3:
-                    this.stickerClassName = "sticker-header-green";                    
+                    this.stickerClassName = "sticker-header-cyan";                    
                     break;
                 default:
                     this.stickerClassName = "sticker-header-orange"
@@ -257,14 +276,14 @@
         let StickerList = [];
         for (var i = 0; i < stickers.length; i++){
             //draw Stickers according to data from Server
-
+            
             /*
-            //Commented, let server decide what to do.
-            if(stickers[i].backlog == -1){
-               stickers[i].backlog = stickers[i].sprintPrev;
+            //Uncommented part, let it for server.
+            if(stickers[i].sprintState == -1){
+               stickers[i].sprintState = stickers[i].sprintPrev;
             }
             */
-            StickerList.push({id: stickers[i].serverId,name:stickers[i].title, content:stickers[i].text, backlog: stickers[i].backlog, sprint:stickers[i].sprint ,sprint_state: parseInt(stickers[i].sprintState)}); 
+            StickerList.push({id: stickers[i].serverId,name:stickers[i].title, content:stickers[i].text, backlog: stickers[i].backlog, sprint:stickers[i].sprint ,sprint_state: stickers[i].sprintState}); 
         }
             //Preparing to call an Ajax Call
             console.log(StickerList);
@@ -272,27 +291,36 @@
             let destAddress = "/course/3_sprint_backlog/" + courseId + "/";
             ajaxCall("POST",destAddress, data, function(){return false;});
     };
-
+    
     /*Functions for Command buttons END*/
     window.onresize = function(event) {
         /*
             On resize Event
             alert("Someone resized window. Stickers might not be in place!!")
         */
-        productBacklogRect = document.querySelector('#product_backlog').getBoundingClientRect();
-        otherBacklogRect = document.querySelector('#other_backlog').getBoundingClientRect();
         let margin = 5;//in pixels
+        //Need to get new coordinates of backlogs.
+        log_1 = document.querySelector('#sprint_not_started').getBoundingClientRect();
+        log_2 = document.querySelector('#sprint_wip').getBoundingClientRect();
+        log_3 = document.querySelector('#sprint_review').getBoundingClientRect();
+        log_4 = document.querySelector('#sprint_completed').getBoundingClientRect();
         for (var i = 0; i < stickers.length; i++){
             //draw Stickers according to data from Server
-            switch(stickers[i].sprint){
+            switch(stickers[i].sprintState){
                 case 0:
-                    stickers[i].posX = productBacklogRect.left + margin;
+                    stickers[i].posX = log_1.left + margin;
                     break;
                 case 1:
-                    stickers[i].posX = otherBacklogRect.left + margin;
+                    stickers[i].posX = log_2.left + margin;
+                    break;
+                case 2:
+                    stickers[i].posX = log_3.left + margin;
+                    break;
+                case 3:
+                    stickers[i].posX = log_4.left + margin;
                     break;
                 default:
-                    stickers[i].posX = otherBacklogRect.left + otherBacklogRect.width + margin;
+                	stickers[i].posX = log_4.left + log_4.width + margin;
                     this.stickerClassName = "sticker-header-orange"
                     break;
             }
@@ -319,10 +347,9 @@
 //        ajaxCall("POST",destAddress, data,displayNewSticker); //Don't send it right now. It will only be saved after save_progress button.
 //    }
 
-
     var deleteStickers = function(){
         /*
-            Removes all stickes from the webpage (HTML code).
+            Removes all stickes from the webpage.
             Doesn't send any information from the server.
         */
         for(let i = 0; i < stickers.length; i++){
@@ -361,10 +388,11 @@
     var displayNewSticker = function(data){
             /*Displays new sticker on the screen*/
             let area = document.querySelector('#new_story_content').getBoundingClientRect();
-            let s = new Sticker(stickers.length,1,-1,-1,area.left + area.width,area.top + scrollPos);
+            let title = document.querySelector('#new_story_name').value;
+            let text = document.querySelector('#new_story_content').value;
+            // Sticker(id=0,backlog=0,sprint=0,state=0, posX=0, posY=0,title = "Header",text = "Body") 
+            let s = new Sticker(stickers.length,1,1,-1,area.left + area.width,area.top + scrollPos,title,text);
             stickers.push(s);
-            s.title = document.querySelector('#new_story_name').value;
-            s.text = document.querySelector('#new_story_content').value;
             s.drawSticker();
     }
 
@@ -378,38 +406,52 @@
         let content = "";
         data=JSON.parse(data['stickers']);
         //For printing stickers one by one
-        let productBacklogTempHeight = productBacklogRect.top + scrollPos;
-        let otherBacklogTempHeight = otherBacklogRect.top + scrollPos;
-        let unassignedBacklogTempHeight = otherBacklogRect.top + scrollPos;
-
+        let log_1_height = log_1.top + scrollPos;
+        let log_2_height = log_2.top + scrollPos;
+        let log_3_height = log_3.top + scrollPos;
+        let log_4_height = log_4.top + scrollPos;
+        let log_unassigned_height = log_4.top + scrollPos
         let step = 80; //Distance between next stickers.
         deleteStickers();//reset array with stickers.
         for (var i = 0; i < data.length; i++){
             //Populating Stickers
             //Creating sticker object and giving him starting position.
             let temp_sticker = new Sticker(i);//giving only id, rest is filled by default constructor.
-            let sprint = data[i]['fields']['sprint'];
-            let backlog = data[i]['fields']['backlog'];
-            console.log("sticker ze sprintem: " + sprint + " name: " +data[i]['fields']['name'] );
-            if(sprint == 0){
-                temp_sticker.posX = productBacklogRect.left;
-                temp_sticker.posY = productBacklogTempHeight;
-                if(productBacklogTempHeight+step < productBacklogRect.top+productBacklogRect.height){
-                    productBacklogTempHeight += step;
+            let sprintState = data[i]['fields']['sprint_state'];
+            console.log("From server Sprint state = "   + sprintState);
+            if(sprintState == 0){
+                temp_sticker.posX = log_1.left;
+                temp_sticker.posY = log_1_height;
+                if(log_1_height+step < log_1.top+log_1.height){
+                    log_1_height += step;
                 }
             }
-            else if(sprint ==1){
-                temp_sticker.posX = otherBacklogRect.left;
-                temp_sticker.posY = otherBacklogTempHeight;
-                if(otherBacklogTempHeight+step < otherBacklogRect.top + otherBacklogRect.height){
-                    otherBacklogTempHeight += step;
+            else if(sprintState == 1){
+                temp_sticker.posX = log_2.left;
+                temp_sticker.posY = log_2_height;
+                if(log_2_height+step < log_2.top + log_2.height){
+                    log_2_height += step;
+                }
+            }
+            else if(sprintState == 2){
+                temp_sticker.posX = log_3.left;
+                temp_sticker.posY = log_3_height;
+                if(log_3_height+step < log_3.top + log_3.height){
+                    log_3_height += step;
+                }
+            }
+            else if(sprintState == 3){
+                temp_sticker.posX = log_4.left;
+                temp_sticker.posY = log_4_height;
+                if(log_4_height+step < log_4.top + log_4.height){
+                    log_4_height += step;
                 }
             }
             else{
-                temp_sticker.posX = otherBacklogRect.left + otherBacklogRect.width ;
-                temp_sticker.posY = unassignedBacklogTempHeight;
-                if(unassignedBacklogTempHeight+step < otherBacklogRect.top + otherBacklogRect.height){
-                    unassignedBacklogTempHeight += step;
+            	temp_sticker.posX = log_4.left + log_4.width;
+                temp_sticker.posY = log_unassigned_height;
+                if(log_unassigned_height+step < log_4.top + log_unassigned_height){
+                    log_unassigned_height += step;
                 }
             }
             temp_sticker.title = data[i]['fields']['name'];   
@@ -417,10 +459,11 @@
             temp_sticker.serverId = data[i]['pk'];
             temp_sticker.backlog = data[i]['fields']['backlog'];
             temp_sticker.sprint =  data[i]['fields']['sprint'];
-            temp_sticker.sprint_state = data[i]['fields']['sprint_state'];  
+            temp_sticker.sprintState =  data[i]['fields']['sprint_state'];
             temp_sticker.time =  data[i]['fields']['time'];
+
             stickers.push(temp_sticker);
-            console.log("Creating sticker: " +"id= " + temp_sticker.id + " name = " + temp_sticker.name + " text = " + temp_sticker.content + " backlog: "+ temp_sticker.backlog + " sprint_state: " + temp_sticker.sprint_state);
+            console.log("Creating sticker: " +"id= " + temp_sticker.id + " name = " + temp_sticker.title + " text = " + temp_sticker.text + " backlog: "+ temp_sticker.backlog + " sprint_state: " + temp_sticker.sprintState);
         }
         for (let i = 0; i < stickers.length; i++){
             //draw Stickers according to data from Server
@@ -429,7 +472,6 @@
     }
 
     var clear_field_value = function(ev){
-
         ev.target.value = "";
     }
 
@@ -445,8 +487,11 @@
     //Asume I get all Stickers from server i.e. as an array.
     //Getting coordinates of boundingClientRects displayed in browswer.
     var scrollPos = 0;
-    var productBacklogRect = document.querySelector('#product_backlog').getBoundingClientRect();
-    var otherBacklogRect = document.querySelector('#other_backlog').getBoundingClientRect();
+    var log_1 = document.querySelector('#sprint_not_started').getBoundingClientRect();
+    var log_2 = document.querySelector('#sprint_wip').getBoundingClientRect();
+    var log_3 = document.querySelector('#sprint_review').getBoundingClientRect();
+    var log_4 = document.querySelector('#sprint_completed').getBoundingClientRect();
+    
     //Assign behaviour to the command buttons.
     document.querySelector('#command_see_details').onclick = c_see_details;
     document.querySelector('#command_save_progress').onclick = c_save_progress;
@@ -459,7 +504,7 @@
     temp_data.append("course_id", courseId);
     temp_data.append("sprint", 1);
 
-    ajaxCall("POST", "/course/get_course_sprint_backlog_stickers/" , temp_data, populateStickers);//First need to download stickers from server
+    ajaxCall("POST", "/course/get_course_sprint_stickers/" , temp_data, populateStickers);//First need to download stickers from server
     
     //ajaxCall("GET", window.location.href + courseId + "/", {}, populateStickers);//First need to download stickers from server
      

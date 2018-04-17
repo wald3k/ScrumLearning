@@ -1,17 +1,22 @@
 {% extends "generics/course_generic.html" %}
 {% load static %}
 {% block left %}
-      {% include "includes/header_secondary.html" with section='project_details'  bullet_point='project_details_4' %}
+      {% if progress_estimated == '7' %}
+        {% include "includes/header_secondary.html" with section='project_details'  bullet_point='project_details_4' %}
+      {% elif progress_estimated == '10' %}
+        {% include "includes/header_secondary.html" with section='sprint'  bullet_point='sprint_4' %}   
+      {% elif progress_estimated == '15' %}
+        {% include "includes/header_secondary.html" with section='sprint2'  bullet_point='sprint_4' %}
+      {% endif %}
 {% endblock %}
 
 {% block right %}
-
 <div id="shoutbox">
       {% now "Y-m-d" as todays_date %}
         <h1>Shoutbox</h1>
-          <ul>
-            <div id="shouts">
-            {% for shout in course.shout_set.all %}
+          <ul
+>            <div id="shouts">
+            {% for shout in shouts %}
               <li>
                 <!-- Create a now variable -->
                 <!-- If message was posted today: -->

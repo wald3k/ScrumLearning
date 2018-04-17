@@ -76,26 +76,41 @@ class Program(models.Model):
 			self.name = self.name.strip()
 
 
-BACKLOGS_PRIMARY = (
-	(0, ("PRODUCT_BACKLOG")),
-	(1, ("RELEASE_BACKLOG")),
+CHOICES_BACKLOG = (
+	(0, ("NOT_SELECTED")),
+	(1, ("PRODUCT_BACKLOG")),
 	)
 
-BACKLOGS_SECONDARY = (
-	(0, ("NOT_ASSIGNED")),
+CHOICES_SPRINT_STATES = (
+	(0, ("NOT_SELECTED")),
+	(1, ("NOT_STARTED")),
+	(2, ("IN_PROGRESS")),
+	(3, ("COMPLETED")),
+	)
+CHOICES_SPRINT= (
+	(0, ("NOT_SELECTED")),
 	(1, ("SPRINT_1")),
 	(2, ("SPRINT_2")),
 	)
 class Story(models.Model):
-	backlog_primary = models.IntegerField(choices=BACKLOGS_PRIMARY, default=0) #Decide if tory will be included in Product Backlog.
-	backlog_secondary = models.IntegerField(choices=BACKLOGS_SECONDARY, default=0) #Decide during which sprint story will be developed.
-	name = models.CharField(max_length=64, blank=False, null=False, unique=True)
+	"""
+	Represents short user story. Stories are used to descsribe some short task during Scrum process.
+	Every Story belongs to some kind o a backlog, has name, content, author and is assigned to a course(Stories should 
+	not be connected to program, because users should be able to add their own stories during course).
+	When Story is in a **BACKLOG**, it can be placed in different places on a **BACKLOG BOARD aka BACKLOG_STATE** i.e.:wip,to-do,completed, etc.
+	"""
+	backlog = models.IntegerField(choices=CHOICES_BACKLOG, default=0) #Decide in which Backlog story will be included.
+	sprint =models.IntegerField(choices=CHOICES_SPRINT, default=0)
+	sprint_state = models.IntegerField(choices=CHOICES_SPRINT_STATES, default=0) #Decide where on backlog board story should be(wip,to-do etc.)
+	name = models.CharField(max_length=64, blank=False, null=False, unique=False)
 	content = models.TextField()
 	author = models.ForeignKey('Profile.Profile', on_delete=models.CASCADE)
 	course = models.ForeignKey('Course', on_delete=models.CASCADE, null=True)
+	solution = models.TextField()
+	time = models.IntegerField(default=0) #For Planning Poker game.
 
 	def __str__(self):
-		return "{name}:    {content}. Created by: {author}".format(name=self.name,content=self.content,author = self.author.username)
+		return "{name}:    {content}. Created by: {author}. Backlog: {backlog}, Sprint: {sprint}, Sprint_State: {sprint_state} ".format(name=self.name,content=self.content,author = self.author.username, backlog = self.backlog,sprint = self.sprint, sprint_state = self.sprint_state)
 
 
 
@@ -112,11 +127,13 @@ COURSE_STATES = (
 	(4, ("CURRENT_PROGRESS")),
 	(5, ("PRODUCT_BACKLOG")),
 	(6, ("GENERAL_DISCUSSION")),
-	(7, ("SPRINT_1")),
-	(8, ("RETROSPECTION_1")),
-	(9, ("SPRINT_1")),
-	(10, ("RETROSPECTION_1")),
-	(11, ("FINAL_RESULTS")),
+	(7, ("SPRINT_1_BACKLOG")),
+	(8, ("SPRINT_1_BACKLOG")),
+	(9, ("SPRINT_1_BACKLOG")),
+	(10, ("SPRINT_1_RETROSPECTION")),
+	(11, ("SPRINT_1")),
+	(12, ("RETROSPECTION_1")),
+	(13, ("FINAL_RESULTS")),
 	)
 
 STUDENT_CHOICES = (
@@ -210,7 +227,7 @@ class Shout(models.Model):
 		Returns:
 		string: Author + text
 		"""
-		return '%s: %s' %(self.author.username,self.text)
+		return '%s: %s course: %s course_stage: %s' %(self.author.username,self.text, self.course, self.course_stage)
 
 	def save(self, *args, **kwargs):
 		''' On save, update timestamps '''

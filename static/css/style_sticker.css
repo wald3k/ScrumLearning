@@ -37,6 +37,15 @@
 .sticker-header-orange{
     background: #c69718;
 }
+.sticker-header-purple{
+    background: #d417b7;
+}
+.sticker-header-yellow{
+    background: #f0d714;
+}
+.sticker-header-cyan{
+    background: #17c5d4;
+}
 .sticker textarea{
     box-sizing: border-box;
     min-height: 100px;
@@ -50,12 +59,35 @@
 .sticker-header-blue:hover,
 .sticker-header-red:hover,
 .sticker-header-green:hover,
-.sticker-header-orange:hover{
+.sticker-header-orange:hover,
+.sticker-header-cyan,
+.sticker-header-yellow,
+.sticker-header-purple{
     cursor: move;
 }
 /**********************************/
 /*      STICKER CONTAINERS        */
 /**********************************/
+.backlog-title{
+    font-size: 2.5em;
+    font-weight: bold;
+    min-height: 150px;
+    padding: 3% 1%;
+    border-top: 2px solid #ccc;
+    background-color: #ddd;
+    text-align: center;
+    /*Rounding corners*/
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+    /*Making text in container be aligned vertically. Using Flexbox*/
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: center; /* align vertical */
+}
+.backlog-title:hover{
+    background-color: #bababa;
+    cursor: help;
+}
 .backlog-container{
     box-sizing: border-box;
     min-width: 280px;
@@ -73,23 +105,10 @@
     user-select: none;
     /*background: rgba(222, 222, 222, 0.24);*/
 }
-#sprint_commited_stories{
+/*Unused code*/
+/*#sprint_commited_stories{
     background: url(/static/img/sprint_commited_stories.png); background-repeat: repeat-xy; opacity: 0.6;
     background-color: #c0b6ce;
     background-blend-mode: multiply;
 }
-#sprint_tasks_not_started{
-    background: url(/static/img/sprint_tasks_not_started.png); background-repeat: repeat-xy; opacity: 0.6;
-    background-color: #6979be;
-    background-blend-mode: multiply;
-}
-#sprint_work_in_progress{
-    background: url(/static/img/sprint_work_in_progress.png); background-repeat: repeat-xy; opacity: 0.6;
-    background-color: #cdd15f;
-    background-blend-mode: multiply;
-}
-#sprint_tasks_completed{
-    background: url(/static/img/sprint_tasks_completed.png); background-repeat: repeat-xy; opacity: 0.6;
-    background-color: #24eb43; /* The shade of black that you want*/
-    background-blend-mode: multiply;
-}
+*/

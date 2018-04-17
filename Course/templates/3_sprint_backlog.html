@@ -1,11 +1,15 @@
 {% extends "generics/course_generic.html" %}
 {% load static %}
 {% block left %}
-      {% include "includes/header_secondary.html" with section='sprint'  bullet_point='sprint_1' %}
+      {% if SPRINT_NUMBER == 1 %}
+        {% include "includes/header_secondary.html" with section='sprint'  bullet_point='sprint_1' %}
+      {% else %}
+        {% include "includes/header_secondary.html" with section='sprint2'  bullet_point='sprint_1' %}
+      {% endif %}
 {% endblock %}
 
 {% block right %}
-        
+          
 <div class="col span-10-of-12">
 <!--    MAIN CONTENTS OF WEBSITE-->
 <h1> Choose tasks into sprints!</h1>
@@ -53,5 +57,5 @@
     
 {% endblock %}
 {% block additional_scripts %}
-<script src="{% static 'js/product_backlog.js' %}"></script>
+<script src="{% static 'js/sticker.js' %}"></script>
 {% endblock %}

@@ -35,11 +35,21 @@ Deadline till: {{ deadline }}
 
 
 <h1>Stories</h1>
-Sories:<br>
-{% for story in stories %}
-	{{story}}<br>
-{% endfor %}
-Stories in total: {{stories|length}}<br>
+<table style="width:50%">
+  <tr>
+    <th align="left">Story name</th>
+    <th align="left">Story content</th>
+    <th align="left">Author</th>
+  </tr>
+	{% for story in stories|slice:":10"  %}
+	 <tr>
+	 	<td>{{story.name}}</td>
+	 	<td>{{story.content}}</td>
+	 	<td>{{story.author}}</td>
+	 </tr>
+	{% endfor %}
+</table>
+<br>Stories in total: {{stories|length}}<br>
 
 
 Stories in Product backlog:

@@ -15,7 +15,12 @@
 		var days = diff.getUTCDate()-1; // Gives day count of difference
 		var seconds = diff.getUTCSeconds();
 		var minutes = diff.getUTCMinutes(); // Gives day count of difference
-		daysLeftElement.innerHTML = 'Days left: '+ days + ' minutes: ' + minutes + ' seconds: ' + seconds;
+		if(currentDate>d){
+			daysLeftElement.innerHTML = '<b><font color="red">Project is overdued:</b></font> '
+		}
+		else{
+			daysLeftElement.innerHTML = 'Time left: ' + days + ' days,  '+ minutes + ' minutes, ' + seconds + ' seconds.';	
+		}
 		setInterval(calculateTime, 1000);
 	}
 	

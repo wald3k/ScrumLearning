@@ -44,8 +44,7 @@ section{
     visibility: hidden;
 }
 .row {
-/*    max-width: 1140px;*/
-    max-width: 1400px;
+    max-width: 2000px;
     margin: 0 auto; /*top and bottom are 0, left,right are auto*/
 }
 /*----------------------------------------*/
@@ -1288,3 +1287,123 @@ color:#321268;
     max-height: 50px;
     width: auto;
 }
+
+
+/*TOOLTIP SETTINGS START*/
+ /* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    font-size: 0.5em;
+    min-width: 400px;
+
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -200px;
+
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+/* Tooltip arrow */
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+} 
+/*TOOLTIP SETTINGS END*/
+
+/*----------------------------------------*/
+/*          TASK DASHBOARD                */
+/*----------------------------------------*/
+#dashboard-story-container{
+    background: #e8d04e;
+    text-align: center;
+    vertical-align: middle;
+    min-height: 150px;
+    border-radius: 5px;
+    margin-bottom: 5%;
+}
+#dashboard-story-name{
+    font-size: 2em;
+    border-bottom: 1px dashed #ccc;
+    padding:0;
+    margin: 0;
+    font-weight: bold;
+    background: #18c65b;
+}
+#dashboard-story-content{
+    font-size: 1em;
+    padding: .5%;
+    margin-top: 1%;
+}
+.dashboard-story-container-grey{
+    background: #ccc !important;
+}
+.dashboard-story-content-grey{
+    background: #ccc !important;
+}
+.dashboard-story-name-grey{
+    background: #aaa !important;
+}
+
+.story-locked{
+    color: red;
+}
+#dashboard-buttons-container{
+    text-align: center;
+    font-size: 3em;
+}
+#dashboard-source{
+    height:900px;
+    width: 100%;
+}
+#dashboard-myiframe{
+    width: 100%;
+    height: auto;
+}
+#dashboard-button-up:hover,
+#dashboard-button-down:hover{
+    color: #123;
+    cursor: pointer;
+}
+#dashboard-button-accept{
+    text-align: center;
+    font-size: 0.5em;
+    margin:0 auto;
+    padding: 10%;
+    width: 100%;
+}
+#dashboard-button-accept:hover{
+    color:#111;
+}
+
+/*----------------------------------------*/
+/*          TASK DASHBOARD END            */
+/*----------------------------------------*/

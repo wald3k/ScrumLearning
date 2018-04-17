@@ -1,2 +1,7 @@
 admin_create.txt
 setup-script.txt
+*/migrations/*
+/static/users/*
+*.png
+*.pyc
+*.sqlite3

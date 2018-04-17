@@ -1,0 +1,92 @@
+{% extends "generics/course_generic.html" %}
+{% load static %}
+{% block left %}
+  {% if SPRINT_NUMBER == 1 %}
+      {% include "includes/header_secondary.html" with section='sprint'  bullet_point='sprint_2' %}
+    {% else %}
+      {% include "includes/header_secondary.html" with section='sprint2'  bullet_point='sprint_2' %}
+    {% endif %}
+{% endblock %}
+
+{% block right %}
+        SPRIINT BOARD NOT YET COMPLETED!!!
+
+<div class="col span-10-of-12">
+<!--    MAIN CONTENTS OF WEBSITE-->
+<h1> Choose tasks into sprints!</h1>
+    <p>
+        Prioritize them from the most important at the <span style="font-weight: bold;color: blue;">top</span> of the page to the lease important at the <span style="font-weight: bold;color: red;">bottom</span> of the page.
+    </p>
+<div class="row" style="max-width: 3500px;">
+
+<div class = "col span-1-of-4">
+  <div class="tooltip backlog-title">Not started
+    <span class="tooltiptext">Put here stories that have not yet been started.</span>
+  </div>
+  <div id="sprint_not_started" class="backlog-container relative" style="background: url(/static/img/sprint_tasks_not_started.png); background-repeat: repeat-xy; opacity: 0.3;">
+  <!--  Place for stickers  -->
+  </div>
+</div>
+    
+  <div class = "col span-1-of-4">
+    <div class="tooltip backlog-title">Work in progress
+        <span class="tooltiptext">Put here all stories that are in 'Work in Progress' state.</span>
+    </div>
+    <div id="sprint_wip" class="backlog-container relative" style="background: url(/static/img/sprint_work_in_progress.png); background-repeat: repeat-xy; opacity: 0.3;">
+<!--  Place for stickers  -->
+    </div>
+  </div>
+  <div class = "col span-1-of-4">
+    <div class="tooltip backlog-title">To be reviewed
+      <span class="tooltiptext">Put here stories that are awaiting review..</span>
+    </div>
+    
+    <div id="sprint_review" class="backlog-container relative" style="background: url(/static/img/sprint_review.png); background-repeat: repeat-xy; opacity: 0.3;">
+<!--  Place for stickers  -->
+    </div>
+  </div>
+
+  <div class = "col span-1-of-4">
+    <div class="tooltip backlog-title">Completed
+      <span class="tooltiptext">Put here stories that have been completed for this sprint.</span>
+    </div>
+    
+    <div id="sprint_completed" class="backlog-container relative" style="background: url(/static/img/sprint_tasks_completed.png); background-repeat: repeat-xy; opacity: 0.3;">
+<!--  Place for stickers  -->
+    </div>
+  </div>
+
+    
+</div>
+
+<div>
+<!-- Story form -->
+          Story name:<br>
+          <input type="text" id="new_story_name" value="Type story name here.."><br>
+          Story content:<br>
+          <textarea id ="new_story_content" rows="4" cols="50">Type story text here..</textarea> 
+          <button id="new_story_submit" type="submit" class="save btn btn-default" style="font-size: 2em;font-weight: bold;">Add new sticker</button>
+</div>
+
+    
+<!--    Some buttons go here   -->
+     <div class="editor-actions">
+        <div class="row">
+            <div class="col span-1-of-2">
+                <a id="command_see_details" href="#task-description"><i class="ion-clipboard"></i></a>
+                <h6>See task details</h6>
+                <p>See what is the main goal of the target, what are the restrictions and how end-effect should look like.</p>
+            </div>
+            <div class="col span-1-of-2">
+                <a id="command_save_progress" href="#"><i class="ion-ios-cloud-download-outline "></i></a>
+                <h6>Save your progress</h6>
+                <p>Make sure you save your progress before logging out.</p>
+            </div>
+        </div> 
+    </div>   
+</div>    
+    
+{% endblock %}
+{% block additional_scripts %}
+<script src="{% static 'js/sticker.js' %}"></script>
+{% endblock %}

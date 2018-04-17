@@ -1,0 +1,172 @@
+{% extends "generics/course_generic.html" %}
+{% load static %}
+{% block left %}
+  {% if SPRINT_NUMBER == 1 %}
+        {% include "includes/header_secondary.html" with section='sprint'  bullet_point='sprint_3' %}
+  {% else %}
+        {% include "includes/header_secondary.html" with section='sprint2'  bullet_point='sprint_3' %}
+  {% endif %}
+{% endblock %}
+
+{% block right %}
+<div class="col span-9-of-12">
+  <div id="dashboard-story-container" >
+      <div id="dashboard-story-name">
+        No story name yet..
+      </div>
+      <div id="dashboard-story-content">
+        No story content yet..
+      </div>
+  </div>
+</div>
+
+<div id="dashboard-buttons-container" >
+  <div class="col span-1-of-12">
+      <i id="dashboard-button-up" class="ion-arrow-up-b"></i><br>
+      <i id="dashboard-button-down" class="ion-arrow-down-b"></i><br>
+    </div>
+      <div class="col span-2-of-12">
+        <a id="dashboard-button-accept" class="btn btn-pagination" href="#">
+          <span id="dashboard-button-accept-text">Edit solution</span><br>
+          <i  id="dashboard-lock-icon" class="ion-unlocked" style="font-size:1em;"></i>
+        </a>
+      </div>
+</div>
+
+
+
+
+<div class="col span-10-of-12">
+<!--    MAIN CONTENTS OF WEBSITE-->
+    <div class="row">
+         <div class="col span-1-of-2">
+            <h1>Editor</h1>
+             <textarea id="dashboard-source">
+                Put your Sprint code here...
+            </textarea> 
+        </div>
+        <div class="col span-1-of-2">
+            <h1>Result of the code</h1>
+            <iframe id="dashboard-myiframe" srcdoc = "Please use button below to load content to a 'Result IFrame'" style="width: 100%;height: 470px;">
+            </iframe>
+        </div>
+    </div>
+    <button id="run" class="" onclick="populate_iframe()">
+        Send code to an IFrame
+    </button>
+    
+<!--    Some buttons go here   -->
+     <div class="editor-actions">
+        <div class="row">
+            <div class="col span-1-of-2">
+                <a id="command_see_details" href="#task-description"><i class="ion-clipboard"></i></a>
+                <h6>See task details</h6>
+                <p>See what is the main goal of the target, what are the restrictions and how end-effect should look like.</p>
+            </div>
+            <div class="col span-1-of-2">
+                <a id="command_save_progress" href="#"><i class="ion-ios-cloud-download-outline "></i></a>
+                <h6>Save your solution</h6>
+                <p>Make sure you save your progress before logging out.</p>
+            </div>
+        </div> 
+    </div>  
+<!--    END OF MAIN CONTENTS OF WEBSITE-->
+</div> 
+
+
+
+{% endblock %}
+{% block additional_scripts %}
+<script>
+//    Run this function on document load. It populates the Editor TextArea.
+window.onload = function(){
+      var text =
+`<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/p5.js"><\/script>
+<script>
+  window.addEventListener("keydown", function(e) {
+      /*
+          Preventing website from scrolling by clicking arrow keys.
+      */
+      // space and arrow keys
+      if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+          e.preventDefault();
+      }
+  }, false);
+<\/script>
+<\/head>
+<h1>
+    Example of use of p5.js library.
+</h1>
+<script>
+document.onkeydown = checkKey;
+var snake = {x: 0, y: 0, size: 10, speed: 10};
+var DIM_HORIZONTAL = 300
+var DIM_VERTICAL = 300;
+var fill_color = [20,20,20];
+    function setup(){
+    createCanvas(DIM_HORIZONTAL,DIM_VERTICAL);
+    background(230);
+}
+function draw(){
+    background(230);
+    stroke(255,0,0);
+    fill(fill_color);
+    rect(snake.x,snake.y,snake.size, snake.size);
+    check_winning_condition();
+}
+
+function checkKey(e) {
+    e = e || window.event;
+    if (e.keyCode == '38') {
+        \/\/going up
+        console.log("going up");
+        snake.y -= snake.speed;
+    }
+    else if (e.keyCode == '40') {
+        \/\/going down
+        snake.y += snake.speed;
+    }
+    else if (e.keyCode == '37') {
+        \/\/going left
+        snake.x -= snake.speed;
+    }
+    else if (e.keyCode == '39') {
+        \/\/going right
+        snake.x += snake.speed;
+    }
+    else if (e.keyCode == '13') {
+        \/\/going right
+        fill_color[0] = Math.floor(Math.random() * 255);
+        fill_color[1] = Math.floor(Math.random() * 255);
+        fill_color[2] = Math.floor(Math.random() * 255);
+    }
+}
+
+function check_winning_condition(){
+    if(snake.x + snake.size > DIM_HORIZONTAL || snake.y + snake.size > DIM_VERTICAL || snake.x < 0 || snake.y < 0){
+        snake.x = 0;
+        snake.y = 0;
+        window.alert("You lost! \\nTry again.");
+    }
+}
+<\/script>
+`;
+        //document.getElementById("dashboard-myiframe").srcdoc = text;
+        //document.getElementById("dashboard-source").value = text;
+};
+
+//Grabs text from textarea and puts it into IFrame
+    function populate_iframe(){
+        var text_area = document.getElementById("dashboard-source").value;
+        //Populating contents of iframe
+        document.getElementById("dashboard-myiframe").srcdoc = text_area;    
+        window.alert("New code has been appended to an IFrame. Watch your progress in 'Results' window");
+    }    
+</script>
+<script>
+  var stories = JSON.parse("{{json_stories|escapejs}}");
+</script>
+<script src="{% static 'js/task_dashboard.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/p5.js"><\/script>
+{% endblock %}

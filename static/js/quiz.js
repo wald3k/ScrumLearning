@@ -55,7 +55,7 @@ var initializeQuiz = function(data){
 	document.getElementById('btn-quiz-prev').onclick = prevQuestion;
 	document.getElementById('summary').onclick = summarizeQuiz;
 
-    if(data['already_passed'] = true){
+    if(data['already_passed'] == true){
         let el =document.getElementById('already-passed').innerHTML = "Congratultions! You've already passed this quiz. But still can improve!"
     }
 
