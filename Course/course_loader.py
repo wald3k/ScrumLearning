@@ -38,4 +38,4 @@ def quiz_init():
 	# q1 = Question.objects.create(question_text="Does scrum have rules, or just guidelines?",quiz = quiz_1)
 	# a_q1_1 = Answer.objects.create(text="Scrum has a few simple rules",question=q1)
 	# a_q1_1.is_valid = True
-	# a_q1_2 = Answer.objects.create(text="Scrum has guidelines only, no rules at all.",question=q1)
+# a_q1_2 = Answer.objects.create(text="Scrum has guidelines only, no rules at all.",question=q1)
