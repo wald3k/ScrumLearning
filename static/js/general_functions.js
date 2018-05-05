@@ -3,9 +3,7 @@ var getUserId = function(userId){
     alert("User id is: " + userId);
 };
 
-//
 // Find the CSRF Token cookie value
-//
 function parse_cookies() {
     var cookies = {};
     if (document.cookie && document.cookie !== '') {
@@ -96,7 +94,6 @@ var ajaxCall = function(type, destAddress, data, successFunction){
 	request.onload = function () {
 		//Not used
 	}
-
 	request.onerror = function() {
 	  // There was a connection error of some sort
 		console.log("Connection error occured.");
@@ -178,6 +175,7 @@ var set_course_progress = function(){
 	};
 	request.onload = function () {
 		result = request.responseText;
+		location.reload();
 	}
 	request.onerror = function() {
 		console.log("There was a connection error of some sort");

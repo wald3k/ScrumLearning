@@ -31,12 +31,12 @@
 		<div class="row sm-decision-panel">  
 			<h1>Scrum Master Decission Panel</h1>
 			{% if progress_estimated <= course.get_progress %}
-				<i class="ion-unlocked" style="font-size:1.5em;"></i>
-				<a class="btn btn-pagination" onclick="set_course_progress()" href="#">Stage is unlocked</a>
+				<i id="progress-icon" class="ion-unlocked" style="font-size:1.5em;"></i>
+				<a id="progress-btn" class="btn btn-pagination" onclick="set_course_progress()" href="#">Stage is unlocked</a>
 				<p>Participants can access this part of a course.</p>
 			{% else %}
-				<i class="ion-locked" style="font-size:1.5em;"></i>
-				<a class="btn btn-pagination red" onclick="set_course_progress()" href="#">Unlock this stage</a>
+				<i id="progress-icon" class="ion-locked" style="font-size:1.5em;"></i>
+				<a id="progress-btn" class="btn btn-pagination red" onclick="set_course_progress()" href="#">Unlock this stage</a>
 				<p>So that other users can proceed to the next stage of the project...</p>
 			{% endif %}
 			

@@ -1407,3 +1407,125 @@ color:#321268;
 /*----------------------------------------*/
 /*          TASK DASHBOARD END            */
 /*----------------------------------------*/
+
+/*----------------------------------------*/
+/*          Scrum Poker START             */
+/*----------------------------------------*/
+
+.scrum-poker-main{
+    background: #ddd;
+    font-size: 1.5em;
+    text-align: center;
+    width: 50%;
+    margin: auto;
+    padding: 1%;
+    border-radius: 5px;
+
+}
+.scrum-poker-main .sticker{
+    vertical-align: center;
+    position: relative;
+    margin: 0 auto;
+    display: inline-block;
+}
+
+.scrum-poker-main .ion-arrow-left-c,
+.scrum-poker-main .ion-arrow-right-c{
+    font-size: 3em;
+    margin: auto;
+}
+.scrum-poker-main .ion-arrow-left-c:hover,
+.scrum-poker-main .ion-arrow-right-c:hover{
+    color: chocolate;
+    cursor: pointer;
+}
+.scrum-poker-main .sticker-header-blue{
+    height: auto;
+}
+
+#cards-container{
+    overflow: hidden; /* will contain if #first is longer than #second */
+    text-align: center;
+    margin: auto;
+    width: 100%;
+}
+.poker-card{
+    background: #eee;
+    border-radius: 25px;
+    text-align: center;
+    display: inline-block;
+    width: 200px;
+    min-height: 300px;
+    min-width: 300px: 
+    font-size: 1.5em;
+    vertical-align: center;
+    border-style: solid;
+    border-width: 10px;
+    border-color: #999;
+    margin: 2% 2%;
+    vertical-align: bottom;
+
+}
+.poker-card button,
+.poker-card input{
+    width: 80%;
+    padding: 5%;
+    margin-right: 1% auto;
+    display: block-inline;
+
+}
+/* On screens that are 992px or less, set the background color to blue */
+@media screen and (max-width: 992px) {
+    .poker-card{
+        display: block;
+        margin: 1% auto;
+        min-height: 100px;
+        min-width: 100px:
+        border-width: 3px;
+    }
+}
+.poker-card-author{
+    float: left;
+    padding: 2%;
+
+}
+.poker-card-avatar{
+/*    border-radius: 50%;
+    width: auto;
+    padding: : auto;*/
+}
+
+.poker-card-estimation{
+    float: center;
+    display: block;
+    font-size: 2.5em;
+    background: #ccc;
+    border-radius: 50%;
+    margin: auto;
+    width: 50%;
+    text-align: center;
+    border: none;
+}
+.poker-card-estimation-invisible{
+    float: center;
+    display: block;
+    font-size: 2.5em;
+    background: #ccc;
+    border-radius: 50%;
+    margin: auto;
+    color: #000;
+    text-align: center;
+    border: none;
+}
+
+.poker-game-details{
+    margin: auto;
+    padding: 2%;
+    background-color: #999;
+    border-radius: 5px;
+    font-size: 0.8em;
+}
+
+/*----------------------------------------*/
+/*          Scrum Poker END               */
+/*----------------------------------------*/

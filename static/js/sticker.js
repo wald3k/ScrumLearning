@@ -2,6 +2,7 @@
 //Using IIFE construct.
 (function () {
     'use strict';
+    var NEW_STICKER_V_OFFSET = 0; //It is used by newly created Stickers, to shift them below each other.
     /********************************
 	*								*
 	* Stickers/moving/draging etc.	*	
@@ -323,7 +324,14 @@
                         break;
                 }
             }
-
+            if(this.time > 50 || this.time == null ){
+                /*If time of sticker was not estimated in Scrum Poker
+                then show it greyed-out, without possibility to move.
+                //TODO make it dependent rather on some Boolean value
+                i.e. is_estimated, then by time of a Story.
+                */
+                this.stickerClassName = "sticker-locked";
+            }
             this.barEl.classList.add(this.stickerClassName);
             this.stickerEl.classList.add('sticker');
             this.stickerEl.appendChild(this.barEl);
@@ -518,19 +526,22 @@
 
     var displayNewSticker = function(data){
             /*Displays new sticker on the screen*/
-            let area = document.querySelector('#new_story_content').getBoundingClientRect();
+            //let area = document.querySelector('#new_story_content').getBoundingClientRect();
+            let area = document.querySelector('#product_backlog').getBoundingClientRect();
+            NEW_STICKER_V_OFFSET = NEW_STICKER_V_OFFSET +10;
+            let NEW_STICKER_H_OFFSET = 10; 
             let title = document.querySelector('#new_story_name').value;
             let text = document.querySelector('#new_story_content').value;
             // Sticker(id=0,backlog=0,sprint=0,state=0, posX=0, posY=0,title = "Header",text = "Body") 
             let s;
             if(WHICH_BACKLOG == 'backlog'){
-				s = new Sticker(stickers.length,-1,-1,-1,area.left + area.width,area.top + scrollPos,title,text);
+				s = new Sticker(stickers.length,-1,-1,-1,area.left + NEW_STICKER_H_OFFSET,area.top + scrollPos + NEW_STICKER_V_OFFSET,title,text);
             }
             else if(WHICH_BACKLOG == 'sprintBacklog'){
-				s = new Sticker(stickers.length,1,SPRINT_NUMBER,-1,area.left + area.width,area.top + scrollPos,title,text);
+				s = new Sticker(stickers.length,1,SPRINT_NUMBER,-1,area.left + NEW_STICKER_H_OFFSET,area.top + scrollPos + NEW_STICKER_V_OFFSET,title,text);
             }
             else if(WHICH_BACKLOG == 'sprintBoardBacklog'){
-				s = new Sticker(stickers.length,1,SPRINT_NUMBER,-1,area.left + area.width,area.top + scrollPos,title,text);
+				s = new Sticker(stickers.length,1,SPRINT_NUMBER,-1,area.left + NEW_STICKER_H_OFFSET,area.top + scrollPos + NEW_STICKER_V_OFFSET,title,text);
                 alert("Created:  " + s.sprint + " "  + s.sprintState );
             }
             stickers.push(s);
@@ -560,7 +571,7 @@
             if(WHICH_BACKLOG == 'backlog'){
             	story_stage = data[i]['fields']['backlog'];
 
-                if(story_stage == 0){
+                if(story_stage == 0  || story_stage == -1){
                     temp_sticker.posX = log_1.left;
                     temp_sticker.posY = log_1_tempHeight;
                     if(log_1_tempHeight + step < log_1.top + log_1.height){

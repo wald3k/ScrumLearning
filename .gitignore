@@ -1,6 +1,7 @@
 admin_create.txt
 setup-script.txt
 */migrations/*
+*/__pycache__/*
 /static/users/*
 *.png
 *.pyc

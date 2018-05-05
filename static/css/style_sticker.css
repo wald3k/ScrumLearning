@@ -13,7 +13,8 @@
 .sticker-header-blue,
 .sticker-header-red,
 .sticker-header-green,
-.sticker-header-orange{
+.sticker-header-orange,
+.sticker-locked{
     height: 25px;
     width: 100%;
     text-align: center;
@@ -45,6 +46,10 @@
 }
 .sticker-header-cyan{
     background: #17c5d4;
+}
+.sticker-locked{
+    /*Class for Story that has not been process of Scrum Poker yet.*/
+    background: #999;
 }
 .sticker textarea{
     box-sizing: border-box;

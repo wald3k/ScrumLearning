@@ -1,0 +1,89 @@
+#Setup script for ScrumLearning project
+#run it like: python manage.py < script.txt
+
+#For loading images to ImageFields
+from django.core.files import File
+#For randomly generated integers
+from random import randint
+
+#Creating a superuser
+from django.contrib.auth import get_user_model
+User = get_user_model()
+User.objects.create_superuser('admin', '', 'admin')
+
+###########################
+# 	Profile App
+###########################
+#Creating student profiles
+from Profile.models import Profile
+#User.objects.create(username='test1',password='a',email='t1@wp.pl')
+
+HOW_MANY_USERS = 5
+for i in range (1,HOW_MANY_USERS):
+	new_user = User.objects.create(username='test' + str(i),email='t' + str(i) + '@wp.pl')
+	new_user.set_password('a')
+	new_user.type='Student'
+	new_user.save()
+
+#Setting random avatars
+i1 = File(open('static/img/user.png','rb'))
+for i in range(1,HOW_MANY_USERS):
+	p = Profile.objects.get(pk=i)
+	which = randint(1,4)
+	img_name = 'user'+ str(which) +'.png'
+	img_to_open = 'static/img/' + img_name
+	p.avatar.save(img_name, File(open(img_to_open ,'rb')))
+
+
+###########################
+# 	Course App
+###########################
+from Course.models import Course, LearningMaterial, Program, Story
+
+#Ceating Learning Material
+material_1 = LearningMaterial()
+material_1.desc='Learning Material Description'
+material_1.file.name = 'static/pdf/2016-Scrum-Guide-US.pdf'
+material_1.save()
+
+#Creating Programs
+program_1 = Program.objects.create(name='Snake game',slug_name='Snake-game',description='Snake game description here...')
+program_2 = Program.objects.create(name='Space Invaders',slug_name='Space-invaders-game',description='Space Invaders game description here...')
+program_3 = Program.objects.create(name='Arkanoid game',slug_name='Arkanoid-game',description='Arkanoid game description here...')
+
+#Setting proper Images
+program_1.cover.save('snake.png',File(open('static/img/snake.png','rb')))
+program_2.cover.save('invaders.png',File(open('static/img/invaders.png','rb')))
+program_3.cover.save('asteroids.png',File(open('static/img/asteroids.png','rb')))
+
+#Adding learning files to programms
+program_1.files.add(material_1)
+program_1.save()
+
+#Creating stories for the program
+story_author = Profile.objects.get(pk=1)
+Story.objects.create(name='Snake_1',content='Create a board for a snake game.',author=story_author)
+Story.objects.create(name='Snake_2',content='Make red rectangle that moves on the board.',author=story_author)
+
+#Creating actual courses
+course_1 = Course.objects.create(program=program_1)
+course_2 = Course.objects.create(program=program_2)
+course_3 = Course.objects.create(program=program_3)
+
+#Populating with students
+student_list = Profile.objects.all()
+counter = 1
+for s in student_list:
+	course_1.students.add(s)
+	if(counter == 1):
+		course_1.students_product_owner.add(s)
+	elif(counter==2):
+		course_1.students_scrum_master.add(s) #adding to scrum master role list.
+	else:
+		course_1.students_developer.add(s)    #adding to developer role list.
+	counter += 1
+
+#New way of initializing quizes:
+#It is using json file from hdd.
+from Course.course_loader import quiz_init
+quiz_init()

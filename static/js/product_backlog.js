@@ -159,7 +159,7 @@
                 default:
                     this.stickerClassName = "sticker-header-orange"
                     break;
-            }
+            }            
             this.barEl.classList.add(this.stickerClassName);
             //If story is unassigned then switch it to default 0 value. Don't want to send invalid data to server.
         }
@@ -181,7 +181,7 @@
                     this.stickerClassName = "sticker-header-orange"
                     break;
             }
-            this.barEl.classList.add(this.stickerClassName);
+            this.barEl.classList.add(this.stickerClassName);  
             this.stickerEl.classList.add('sticker');
             this.stickerEl.appendChild(this.barEl);
             this.stickerEl.appendChild(this.textareaEl);

@@ -10,8 +10,8 @@
         //data.append('course_id', JSON.stringify(courseId));
         data.append('course_id',courseId);
         data.append('course_stage',courseProgressEstimated); //Shouts will be assigned to this stage of a course. So that Sprint#1,Sprint#2 can have separate shouts.
-            let destAddress = "/course/shout_list/";
-            ajaxCall("POST",destAddress, data, successMsg);
+        let destAddress = "/course/shout_list/";
+        ajaxCall("POST",destAddress, data, successMsg);
     };
 
     var successMsg = function(data){
@@ -41,6 +41,7 @@
         ajaxCall("POST",destAddress, data, getShouts);
     };
 document.getElementById('submit_shout').onclick = addNewShout;
+getShouts()//run for the first time when this script is loaded.
 //run getShouts function every 5000ms. In case someone posted new shout. No need to refresh whole page.
 setInterval(getShouts, 5000); 
 

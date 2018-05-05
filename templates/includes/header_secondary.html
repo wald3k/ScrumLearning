@@ -24,6 +24,7 @@
                 <li class="{% if bullet_point == 'project_details_2' %} active {% endif %}"><a href="{% url 'Course:current_progress' course.pk %}">Current progress</a></li>
                 <li class="{% if bullet_point == 'project_details_3' %} active {% endif %}"><a href="{% url 'Course:product_backlog' course.pk %}">Product Backlog</a></li>
                 <li class="{% if bullet_point == 'project_details_4' %} active {% endif %}"><a href="{% url 'Course:discussion' course.pk 7 %}">General Discussion</a></li>
+                <li class="{% if bullet_point == 'project_details_5' %} active {% endif %}"><a href="{% url 'Course:scrum_poker' course.pk %}">Scrum Poker</a></li>
               </ul>
             </div>
       

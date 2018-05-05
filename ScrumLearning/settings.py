@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #Third party Apps
-
+    'rest_framework',
     #User defined Apps
      'Profile',
      'Course',

@@ -1,0 +1,77 @@
+{% extends "generics/course_generic.html" %}
+{% load static %}
+{% block left %}
+      {% include "includes/header_secondary.html" with section='project_details'  bullet_point='project_details_5' %}
+{% endblock %}
+
+{% block right %}
+
+Scrum Poker Goes here!!
+
+<div class="scrum-poker-main">
+    <i id="arrow-left" class="ion-arrow-left-c" style="float: left"></i>
+    <div class="sticker">
+        <div id="sticker-title" class="sticker-header-blue">
+            No stickers avaliable
+        </div>
+        <div id="sticker-body">
+            ...
+        </div>
+    </div>
+    <i id="arrow-right" class="ion-arrow-right-c" style="float: right"></i>
+    <div class="poker-game-details">
+        Status: <div style="display: inline-block;color:green;" class="" id="scrum-poker-status"></div><br>
+        # of estimations: <div style="display: inline-block;" id="scrum-poker-voters"></div><br>
+        Avg. estimation: <span style="display: inline-block;" id="scrum-poker-avg"></span><br>
+    </div>
+</div>
+
+<div id="cards-container">
+<!-- This is a plce where pokercards should be placed. -->
+</div>
+
+
+<div id="shoutbox">
+      {% now "Y-m-d" as todays_date %}
+        <h1>Shoutbox</h1>
+          <ul>
+            <div id="shouts">
+                {% for shout in shouts %}
+                  <li>
+                    <!-- Create a now variable -->
+                    <!-- If message was posted today: -->
+                    {% if todays_date <= shout.date_created|date:"Y-m-d" %}
+                      {{ shout.date_created|date:'H:i' }}
+                    <!-- <span style="color:blue;font-weight:bold;font-size:1.2em;"> {{ shout.author }} </span> -->
+                    <!-- Message was posted in previous days: -->
+                    {% else %}
+                      {{ shout.date_created|date:'Y-m-d H:i' }}
+                    {% endif %}
+                    <a href="{% url 'Profile:main' %}"> <img  src="/{{ shout.author.avatar_url }}" class="avatar-medium-circle" title="{{shout.author.username}}" /></a>
+                    {{ shout.text }}
+                    </br>
+                  </li>
+                {% empty %}
+                  <li>No shouts added yet.</li>
+                {% endfor %}
+            </div>
+          </ul>
+            <!-- Div holding fields that will be used in process of creating a new Shout object. Please note that some information is processed by
+            JavaScript and then the final post query is sent to the server. -->
+            <div id="new-shout-form" id="#myform" >{% csrf_token %}
+                <label>Add new message below: </label>
+                <input type="text" id="input_shout"/>
+                <input type="submit" id="submit_shout" value="SHOUT!"/>
+            </div>
+
+      </div>  <!-- End of shoutbox-->
+
+{% endblock %}
+{% block additional_scripts %}
+<script type="text/javascript">
+/*Grabbibng some global variables here*/
+ajaxCall
+</script>
+<script src="{% static 'js/scrum_poker.js' %}"></script>
+<script src="{% static 'js/general_discussion.js' %}"></script>
+{% endblock %}

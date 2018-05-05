@@ -28,6 +28,10 @@ class Quiz(models.Model):
 	"""
 	name = models.CharField(max_length=64, verbose_name=u'Exam name', )
 
+	class Meta:
+		verbose_name = 'Quiz'
+		verbose_name_plural = 'Quizes'
+
 class Question(models.Model):
 	"""
 	Represents a single Question object that has a relation with one specific Quiz object.
@@ -92,11 +96,12 @@ CHOICES_SPRINT= (
 	(1, ("SPRINT_1")),
 	(2, ("SPRINT_2")),
 	)
+
 class Story(models.Model):
 	"""
 	Represents short user story. Stories are used to descsribe some short task during Scrum process.
 	Every Story belongs to some kind o a backlog, has name, content, author and is assigned to a course(Stories should 
-	not be connected to program, because users should be able to add their own stories during course).
+	not be connected to program, because users should be able to add their own stories durinsg course).
 	When Story is in a **BACKLOG**, it can be placed in different places on a **BACKLOG BOARD aka BACKLOG_STATE** i.e.:wip,to-do,completed, etc.
 	"""
 	backlog = models.IntegerField(choices=CHOICES_BACKLOG, default=0) #Decide in which Backlog story will be included.
@@ -107,12 +112,129 @@ class Story(models.Model):
 	author = models.ForeignKey('Profile.Profile', on_delete=models.CASCADE)
 	course = models.ForeignKey('Course', on_delete=models.CASCADE, null=True)
 	solution = models.TextField()
-	time = models.IntegerField(default=0) #For Planning Poker game.
+	time = models.IntegerField(default=1000) #for planning poker & estimations
+	is_poker_finished = models.BooleanField(default=False)
+
+	class Meta:
+		verbose_name = 'Story'
+		verbose_name_plural = 'Stories'
 
 	def __str__(self):
 		return "{name}:    {content}. Created by: {author}. Backlog: {backlog}, Sprint: {sprint}, Sprint_State: {sprint_state} ".format(name=self.name,content=self.content,author = self.author.username, backlog = self.backlog,sprint = self.sprint, sprint_state = self.sprint_state)
 
 
+class Poker_game(models.Model):
+	""" Represents a Scrum Poker game for a Story.
+		story - reference to Story object.
+		estimations - reference to list of estimations done for the story.
+	"""
+	story = models.OneToOneField('Story',on_delete=models.CASCADE,blank=False,null=True)
+	estimations = models.ManyToManyField('Estimation',related_name='estimations')
+
+	def __str__(self):
+		return "Poker game for story: {story_name}".format(story_name=self.story)
+	def user_allowed_to_vote(self, user_id):
+		""" Returns true if user with given id can vote in Scrum Poker. If not, returs false."""
+		if(self.obligated_to_estimate(user_id) == True and self.__already_voted(user_id) == False):
+			return True
+		return False
+
+	def get_obligated_users_qs(self):
+		""" Returns a Queryset with users that should estimate a story."""
+		return 	self.story.course.students_scrum_master.all() | \
+			self.story.course.students_developer.all() #merging lists into Queryset
+
+	def obligated_to_estimate(self,user_id):
+		""" Users that are either developers or scrum master(s) should make estimation"""
+		obligated_users = self.get_obligated_users_qs()
+		try:
+			voter = obligated_users.get(id=user_id)
+		except Profile.DoesNotExist:
+			print("Profile with id: " + str(user_id) + " does not exist!")
+			return False
+		if voter in obligated_users:
+			return True
+		return False
+
+	def __already_voted(self,user_id):
+		""" Checks if user with given id has already estimated the story."""
+		try:
+			temp_profile = Profile.objects.get(pk=user_id)
+		except Profile.DoesNotExist:
+			print("Profile does not exist!")
+			return False
+		qs = Estimation.objects.filter(author=temp_profile,story = self.story)
+		if not qs.count(): #qmpty queryset
+				return False
+		return True
+
+	def add_estimation(self,user_id,estimated_time):
+		""" Adding an estiation for selected story by selected user."""
+		estimation = None
+		if self.user_allowed_to_vote(user_id) == False:
+			print("Cannot vote")
+		else:
+			try:
+				voter = self.get_obligated_users_qs().get(id=user_id)
+				estimation = Estimation.objects.create(author = voter, story = self.story, time=estimated_time)
+				self.estimations.add(estimation)
+				print("Estimate added.")
+				print("Is finished: " + str(self.is_finished()))
+				if (self.is_finished()):
+					self.story.is_poker_finished = True
+				print("get_estimation_avg: " + str(self.get_estimation_avg()))
+				self.story.time = self.get_estimation_avg()
+				self.story.save()
+			except Profile.DoesNotExist:
+				print("Profile does not exist!")
+		
+		return estimation
+
+	def __get_current_estimations(self):
+		return Estimation.objects.filter(story=self.story) #Queryset of all estimations
+	
+	def is_finished(self):
+		""" Returs True if everyone from allowed_voters made an estimate. Else returs False."""
+		estimators = []
+		for estimation in list(self.__get_current_estimations()):
+			estimators.append(estimation.author)
+		if(set(estimators) == set(list(self.get_obligated_users_qs()))):
+			print("Planning poker for " + str(self.story) + " is done!")
+			return True
+		else:
+			print("Planning poker in progress.")
+			return False
+		print("finished..")
+
+	def get_estimation_avg(self):
+		estimations_sum = 0
+		estimations_avg = 0
+		estimations = list(self.__get_current_estimations())
+		for estimation in estimations:
+			estimations_sum = estimations_sum + estimation.time
+		avg = 0
+		try:
+			estimations_avg = estimations_sum / len(estimations)
+		except ZeroDivisionError:
+			estimations_avg = 0
+		else:
+			print("Some other Exception..")
+		return estimations_avg
+
+class Estimation(models.Model):
+	""" Represents a single Estimation for a specified Story made by a member of a team (Profile)."""
+	author = models.ForeignKey('Profile.Profile', on_delete=models.CASCADE)
+	story = models.ForeignKey('Story',on_delete=models.CASCADE,related_name='story')
+	time = models.IntegerField(default=999)
+
+	def get_user_id(self):
+		return self.author.id
+
+	def get_time(self):
+		return self.time
+
+	def __str__(self):
+		return "Profile: {author_id} estimated story with id: {story_id} to {estimation} points.".format(author_id=self.author.id,story_id=self.story.id,estimation=self.time)
 
 #############################################
 # Declare states that course could be in.   #
@@ -127,13 +249,14 @@ COURSE_STATES = (
 	(4, ("CURRENT_PROGRESS")),
 	(5, ("PRODUCT_BACKLOG")),
 	(6, ("GENERAL_DISCUSSION")),
-	(7, ("SPRINT_1_BACKLOG")),
+	(7, ("SCRUM_POKER")),
 	(8, ("SPRINT_1_BACKLOG")),
 	(9, ("SPRINT_1_BACKLOG")),
-	(10, ("SPRINT_1_RETROSPECTION")),
-	(11, ("SPRINT_1")),
-	(12, ("RETROSPECTION_1")),
-	(13, ("FINAL_RESULTS")),
+	(10, ("SPRINT_1_BACKLOG")),
+	(11, ("SPRINT_1_RETROSPECTION")),
+	(12, ("SPRINT_1")),
+	(13, ("RETROSPECTION_1")),
+	(14, ("FINAL_RESULTS")),
 	)
 
 STUDENT_CHOICES = (

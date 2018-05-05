@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse #for httpresponseredrect for a name
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 # Create your views here.
-from .models import Program, Course, Story, Shout, Quiz,QuizResult, CHOICES_SPRINT_STATES
+from .models import Program, Course, Story, Shout, Quiz,QuizResult, CHOICES_SPRINT_STATES, Poker_game
 from Profile.models import Profile
 from django.core.paginator import Paginator
 from .forms import StoryForm
@@ -183,6 +183,8 @@ from django.http import JsonResponse
 def helper(request):
 	"""
 	Returns message that is suggesting final user what should be done in the current_stage of the course.
+	Message is dependend on context['progress_estimated'], that is specified for each view,
+	that is going to display the helper message.
 	"""
 	print("in helper")
 	helperMessage = ""
@@ -193,7 +195,6 @@ def helper(request):
 			print("TU")
 			helperMessage = "Select a course!"
 		elif(course_stage == '0'):
-			print("Its a zero!")
 			helperMessage = "Read this section to get to know how our SCRUM E-Learning system works."
 		elif(course_stage == '1'):
 			helperMessage = "Browse through learning materials. They will help you understand the SCRUM methodology."
@@ -211,14 +212,14 @@ If you succeed you can proceed to the next course section."""
 		elif(course_stage == '6'):
 			helperMessage = """This is a place to discuss the project details before proceeding with the next steps.
 								Such as choosing tasks for a Sprint"""
-		elif(course_stage == '7'):
-			helperMessage = "Choose stories to the current sprint backlog."
 		elif(course_stage == '8'):
-			helperMessage = "Move stories around Scrum board. Update the board as you make progress with your work."
+			helperMessage = "Choose stories to the current sprint backlog."
 		elif(course_stage == '9'):
+			helperMessage = "Move stories around Scrum board. Update the board as you make progress with your work."
+		elif(course_stage == '10'):
 			helperMessage = """Use this panel to write code that will meet story criteria. If you finish your work, you can 
 			save your progress to server and proceed with next stage or select different story."""
-		elif(course_stage == '10'):
+		elif(course_stage == '11'):
 			helperMessage = "Discuss topics connected to Sprint#1 & share your opinions about direction of the project."
 
 	return JsonResponse({'myString':helperMessage})
@@ -511,7 +512,7 @@ def sprint_backlog(request, course_pk, sprint_number):
 					print(temp_story)
 	elif(request.method == 'GET'):
 		print("Got get request")#get method here
-		context['progress_estimated']  = 7
+		context['progress_estimated']  = 8
 		context['WHICH_BACKLOG'] = 'sprintBacklog'
 		context['SPRINT_NUMBER'] = int(sprint_number)
 		print("Przekazuje: " + sprint_number)
@@ -557,7 +558,7 @@ def sprint_board(request, course_pk, sprint_number):
 			print(temp_story)
 	elif(request.method == 'GET'):
 		print("Got get request")#get method here
-		context['progress_estimated']  = 8
+		context['progress_estimated']  = 9
 		context['WHICH_BACKLOG'] = 'sprintBoardBacklog'
 		context['SPRINT_NUMBER'] = int(sprint_number)
 	return render(request, '3_sprint_board.html',context)
@@ -644,7 +645,7 @@ def task_dashboard(request, course_pk, sprint_number):
 		print(temp_story['id'])
 	context['json_stories'] = json.dumps(story_list)
 	context['course'] = course
-	context['progress_estimated'] = 9 #Need to change it
+	context['progress_estimated'] =10 #Need to change it
 	return render(request, '3_task_dashboard.html',context)
 
 @login_required
@@ -683,3 +684,39 @@ def get_story_solutions(request, course_pk):
 
 	return HttpResponse(json_stories, content_type='application/json')
 
+@login_required
+def scrum_poker(request, course_pk):
+	""" Performing a Scrum Poker Game to estimate time for unestimated Stories."""
+	context = {}
+	course = Course.objects.get(pk=course_pk)
+	context['course'] = course
+	context['progress_estimated'] = 6
+	stories = Story.objects.filter(course=course)
+	context['stories'] = stories
+	return render(request, '2_scrum_poker.html',context)
+
+from rest_framework.response import Response
+from .serializer import StorySerializer
+
+@login_required
+def scrum_poker_get_stories(request, course_pk):
+	context = {}
+	course = Course.objects.get(pk=course_pk)
+	context['course'] = course
+	context['progress_estimated'] = 5
+	stories = Story.objects.filter(course=course,is_poker_finished=False)
+	if (request.method == 'POST'):
+		profile = Profile.objects.get(pk=request.user.id)
+		my_serializer = StorySerializer(stories, many=True)#many=True is used for serializing multiple objects
+		print(my_serializer.data) 
+		return JsonResponse({'stories':my_serializer.data})
+	return Response(data) 
+
+@login_required
+def scrum_poker_estimate(request, story_pk):
+	if (request.method == 'POST'):
+		user_id = request.POST.get('userID')
+		new_esimation = request.POST.get('newEstimation')
+		pg = Poker_game.objects.get(story=Story.objects.get(pk=story_pk))
+		pg.add_estimation(user_id,new_esimation)
+	return JsonResponse({'foo':'bar'}) 

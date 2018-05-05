@@ -38,7 +38,10 @@ urlpatterns = [
     url(r'^task_dashboard/(?P<course_pk>\d+)/(?P<sprint_number>\d+)/$', views.task_dashboard,name="task_dashboard"),
     url(r'^save_story_solution/(?P<course_pk>\d+)/$', views.save_story_solution,name="save_story_solution"),
     url(r'^get_story_solutions/(?P<course_pk>\d+)/$', views.get_story_solutions,name="get_story_solutions"),
-
+    #Scrum Poker
+    url(r'^scrum_poker/(?P<course_pk>\d+)/$', views.scrum_poker,name="scrum_poker"),
+    url(r'^scrum_poker_get_stories/(?P<course_pk>\d+)/$', views.scrum_poker_get_stories,name="scrum_poker_get_stories"),
+    url(r'^scrum_poker_estimate/(?P<story_pk>\d+)/$', views.scrum_poker_estimate,name="scrum_poker_estimate"),
 
 
 ]
