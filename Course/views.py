@@ -212,6 +212,9 @@ If you succeed you can proceed to the next course section."""
 		elif(course_stage == '6'):
 			helperMessage = """This is a place to discuss the project details before proceeding with the next steps.
 								Such as choosing tasks for a Sprint"""
+		elif(course_stage == '7'):	
+			helperMessage = "It is time to play a Scrum Poker Game to estimate time for stories."
+		#Sprint #1 Section
 		elif(course_stage == '8'):
 			helperMessage = "Choose stories to the current sprint backlog."
 		elif(course_stage == '9'):
@@ -220,7 +223,23 @@ If you succeed you can proceed to the next course section."""
 			helperMessage = """Use this panel to write code that will meet story criteria. If you finish your work, you can 
 			save your progress to server and proceed with next stage or select different story."""
 		elif(course_stage == '11'):
-			helperMessage = "Discuss topics connected to Sprint#1 & share your opinions about direction of the project."
+			helperMessage = "Discuss topics connected to currently processed Sprint & share your opinions about direction of the project."
+		elif(course_stage == '12'):
+			helperMessage = "It is time to make a retrospection for the Sprint. Use it to enhance your future results."
+		#Sprint #2 Section:
+		elif(course_stage == '13'):
+			helperMessage = "Choose stories to the current sprint backlog."
+		elif(course_stage == '14'):
+			helperMessage = "Move stories around Scrum board. Update the board as you make progress with your work."
+		elif(course_stage == '15'):
+			helperMessage = """Use this panel to write code that will meet story criteria. If you finish your work, you can 
+			save your progress to server and proceed with next stage or select different story."""
+		elif(course_stage == '16'):
+			helperMessage = "Discuss topics connected to currently processed Sprint & share your opinions about direction of the project."
+		elif(course_stage == '17'):
+			helperMessage = "It is time to make a retrospection for the Sprint. Use it to enhance your future results."
+		elif(course_stage == '18'):
+			helperMessage = "I is time to make a summary from the project."
 
 	return JsonResponse({'myString':helperMessage})
 
@@ -512,7 +531,7 @@ def sprint_backlog(request, course_pk, sprint_number):
 					print(temp_story)
 	elif(request.method == 'GET'):
 		print("Got get request")#get method here
-		context['progress_estimated']  = 8
+		context['progress_estimated']  = 8 + (int(sprint_number)-1) * 5
 		context['WHICH_BACKLOG'] = 'sprintBacklog'
 		context['SPRINT_NUMBER'] = int(sprint_number)
 		print("Przekazuje: " + sprint_number)
@@ -645,7 +664,7 @@ def task_dashboard(request, course_pk, sprint_number):
 		print(temp_story['id'])
 	context['json_stories'] = json.dumps(story_list)
 	context['course'] = course
-	context['progress_estimated'] =10 #Need to change it
+	context['progress_estimated'] = 10 + (int(sprint_number)-1) * 5
 	return render(request, '3_task_dashboard.html',context)
 
 @login_required
@@ -690,7 +709,7 @@ def scrum_poker(request, course_pk):
 	context = {}
 	course = Course.objects.get(pk=course_pk)
 	context['course'] = course
-	context['progress_estimated'] = 6
+	context['progress_estimated'] = 7
 	stories = Story.objects.filter(course=course)
 	context['stories'] = stories
 	return render(request, '2_scrum_poker.html',context)
@@ -703,7 +722,7 @@ def scrum_poker_get_stories(request, course_pk):
 	context = {}
 	course = Course.objects.get(pk=course_pk)
 	context['course'] = course
-	context['progress_estimated'] = 5
+	context['progress_estimated'] = 7
 	stories = Story.objects.filter(course=course,is_poker_finished=False)
 	if (request.method == 'POST'):
 		profile = Profile.objects.get(pk=request.user.id)
