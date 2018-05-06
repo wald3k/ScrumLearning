@@ -665,6 +665,7 @@ def task_dashboard(request, course_pk, sprint_number):
 	context['json_stories'] = json.dumps(story_list)
 	context['course'] = course
 	context['progress_estimated'] = 10 + (int(sprint_number)-1) * 5
+	context['SPRINT_NUMBER'] = int(sprint_number)
 	return render(request, '3_task_dashboard.html',context)
 
 @login_required
