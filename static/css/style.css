@@ -1403,6 +1403,12 @@ color:#321268;
 #dashboard-button-accept:hover{
     color:#111;
 }
+.dashboard-actions button{
+    margin-top: 5%;
+    width: 30%;
+    display: inline;
+}
+
 
 /*----------------------------------------*/
 /*          TASK DASHBOARD END            */

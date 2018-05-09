@@ -36,6 +36,7 @@ urlpatterns = [
     url(r'^shout_add/$', views.shout_add,name="shout_add"),
     #Dashbord and solving stories
     url(r'^task_dashboard/(?P<course_pk>\d+)/(?P<sprint_number>\d+)/$', views.task_dashboard,name="task_dashboard"),
+    url(r'^task_review/(?P<course_pk>\d+)/(?P<sprint_number>\d+)/$', views.task_review,name="task_review"),
     url(r'^save_story_solution/(?P<course_pk>\d+)/$', views.save_story_solution,name="save_story_solution"),
     url(r'^get_story_solutions/(?P<course_pk>\d+)/$', views.get_story_solutions,name="get_story_solutions"),
     #Scrum Poker

@@ -34,8 +34,9 @@
                 <li class="{% if section == 'sprint' and bullet_point == 'sprint_1' %} active {% endif %}"><a href="{% url 'Course:sprint_backlog' course.pk 1 %}">Sprint backlog</a></li>
                 <li class="{% if section == 'sprint' and bullet_point == 'sprint_2' %} active {% endif %}"><a href="{% url 'Course:sprint_board' course.pk 1 %}">Sprint board</a></li>
                 <li class="{% if section == 'sprint' and bullet_point == 'sprint_3' %} active {% endif %}"><a href="{% url 'Course:task_dashboard' course.pk 1%}">Task dashboard</a></li>
-                <li class="{% if section == 'sprint' and bullet_point == 'sprint_4' %} active {% endif %}"><a href="{% url 'Course:discussion' course.pk 11 %}">Sprint discussion</a></li>
-                <li class="{% if bullet_point == 'sprint_5' %} active {% endif %}"><a href="#">Retrospection</a></li>
+                <li class="{% if section == 'sprint' and bullet_point == 'sprint_4' %} active {% endif %}"><a href="{% url 'Course:task_review' course.pk 1%}">Task reiew</a></li>
+                <li class="{% if section == 'sprint' and bullet_point == 'sprint_5' %} active {% endif %}"><a href="{% url 'Course:discussion' course.pk 11 %}">Sprint discussion</a></li>
+                <li class="{% if bullet_point == 'sprint_6' %} active {% endif %}"><a href="#">Retrospection</a></li>
               </ul>
             </div>
 
@@ -47,14 +48,11 @@
                 <li class="{% if section == 'sprint2' and  bullet_point == 'sprint_1' %} active {% endif %}"><a href="{% url 'Course:sprint_backlog' course.pk 2 %}">Sprint backlog</a></li>
                 <li class="{% if section == 'sprint2' and bullet_point == 'sprint_2' %} active {% endif %}"><a href="{% url 'Course:sprint_board' course.pk 2 %}">Sprint board</a></li>
                 <li class="{% if section == 'sprint2' and bullet_point == 'sprint_3' %} active {% endif %}"><a href="{% url 'Course:task_dashboard' course.pk 2 %}">Task dashboard</a></li>
-                <li class="{% if section == 'sprint2' and bullet_point == 'sprint_4' %} active {% endif %}"><a href="{% url 'Course:discussion' course.pk 16 %}">Sprint discussion</a></li>
-                <li class="{% if section == 'sprint2' and bullet_point == 'sprint_5' %} active {% endif %}"><a href="#">Retrospection</a></li>
+                <li class="{% if section == 'sprint2' and bullet_point == 'sprint_4' %} active {% endif %}"><a href="{% url 'Course:task_review' course.pk 2 %}">Task review</a></li>
+                <li class="{% if section == 'sprint2' and bullet_point == 'sprint_5' %} active {% endif %}"><a href="{% url 'Course:discussion' course.pk 16 %}">Sprint discussion</a></li>
+                <li class="{% if section == 'sprint2' and bullet_point == 'sprint_6' %} active {% endif %}"><a href="#">Retrospection</a></li>
               </ul>
             </div>
-
-
-
-
       
             <div class="{% if section == 'project_summary' %} active {% endif %} menu-item">
               <h4><a href="#">Project Summary</a></h4>

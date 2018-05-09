@@ -103,12 +103,82 @@
             stories[buttonCounter].solution = document.getElementById("dashboard-source").value;  
 	    }
      }
+
+//Grabs text from textarea and puts it into IFrame
+    function populate_iframe(){
+        var task_code = document.getElementById("dashboard-source").value;
+        //Populating contents of iframe
+        let targetIFrame = document.getElementById("dashboard-myiframe")
+        targetIFrame.srcdoc = "<script> " + task_code + " <\/script>";
+        window.alert("New code has been appended to an IFrame. Watch your progress in 'Results' window");
+        console.log("testing results...");
+        //targetIFrame.srcdoc = targetIFrame.srcdoc +'<script src="/static/js/library_test2.js"><\/script>';
+        targetIFrame.srcdoc = targetIFrame.srcdoc +'<script>' + assert.toString() + ' ' + testOK.toString() +'<\/script>';
+        targetIFrame.srcdoc = targetIFrame.srcdoc + '<script>';
+
+        targetIFrame.srcdoc = targetIFrame.srcdoc + stories[buttonCounter].solution_test
+        targetIFrame.srcdoc = targetIFrame.srcdoc + 'testOK();';
+        //targetIFrame.srcdoc = targetIFrame.srcdoc +  ' ' + 'testOK(); ';
+        targetIFrame.srcdoc = targetIFrame.srcdoc + '<\/script>';
+    }    
+
+
+    function assert(condition, message) {
+        console.log("inside assert function");
+        if (!condition) {
+            message = message || "Assertion failed";
+            if (typeof Error !== "undefined") {
+                throw new Error(message);
+            }
+            throw message; // Fallback
+        }
+    };
+
+     function testOK(condition, message) {
+        alert("SUCCESS!");
+        return 1;
+    }
+
+    function acceptSolutionManually(){
+        alert("Accepting solution..");
+    }
+
+    function runTests(){
+        var task_code = document.getElementById("dashboard-source").value;
+        //Populating contents of iframe
+        let targetIFrame = document.getElementById("dashboard-myiframe")
+        targetIFrame.srcdoc = "<script> " + task_code + " <\/script>";
+        console.log("testing results...");
+        //targetIFrame.srcdoc = targetIFrame.srcdoc +'<script src="/static/js/library_test2.js"><\/script>';
+        targetIFrame.srcdoc = targetIFrame.srcdoc +'<script>' + assert.toString() + ' ' + testOK.toString() +'<\/script>';
+        targetIFrame.srcdoc = targetIFrame.srcdoc + '<script>';
+
+        targetIFrame.srcdoc = targetIFrame.srcdoc + stories[buttonCounter].solution_test
+        targetIFrame.srcdoc = targetIFrame.srcdoc + 'testOK();';
+        //targetIFrame.srcdoc = targetIFrame.srcdoc +  ' ' + 'testOK(); ';
+        targetIFrame.srcdoc = targetIFrame.srcdoc + '<\/script>';
+    }
+
      /*MAIN*/
      //stories array is declared in 3_task_dashboard.html which was returned from server.
     document.getElementById("dashboard-button-up").onclick = clickArrowUp;
     document.getElementById("dashboard-button-down").onclick = clickArrowDown;
     document.getElementById("dashboard-button-accept").onclick = clickAccept;
     document.getElementById("command_save_progress").onclick = saveStorySolution;
+    document.getElementById("run-btn").onclick = populate_iframe;
+    try{
+        document.getElementById("run-test-btn").onclick = runTests;
+    }
+    catch(error){
+
+    }
+    try{
+        document.getElementById("accept-task-btn").onclick = acceptSolutionManually;
+    }
+    catch(error){
+
+    }
+
     var storyLocked = false;
     var buttonCounter = 0;//will indicate index of stories[i]
     initializeTaskDashboard();

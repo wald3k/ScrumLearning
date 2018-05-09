@@ -112,6 +112,7 @@ class Story(models.Model):
 	author = models.ForeignKey('Profile.Profile', on_delete=models.CASCADE)
 	course = models.ForeignKey('Course', on_delete=models.CASCADE, null=True)
 	solution = models.TextField()
+	solution_test = models.TextField()
 	time = models.IntegerField(default=1000) #for planning poker & estimations
 	is_poker_finished = models.BooleanField(default=False)
 
