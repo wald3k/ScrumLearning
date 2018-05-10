@@ -108,23 +108,15 @@
     function populate_iframe(){
         var task_code = document.getElementById("dashboard-source").value;
         //Populating contents of iframe
-        let targetIFrame = document.getElementById("dashboard-myiframe")
+        let targetIFrame = document.getElementById("dashboard-myiframe");
         targetIFrame.srcdoc = "<script> " + task_code + " <\/script>";
         window.alert("New code has been appended to an IFrame. Watch your progress in 'Results' window");
-        console.log("testing results...");
-        //targetIFrame.srcdoc = targetIFrame.srcdoc +'<script src="/static/js/library_test2.js"><\/script>';
-        targetIFrame.srcdoc = targetIFrame.srcdoc +'<script>' + assert.toString() + ' ' + testOK.toString() +'<\/script>';
-        targetIFrame.srcdoc = targetIFrame.srcdoc + '<script>';
-
-        targetIFrame.srcdoc = targetIFrame.srcdoc + stories[buttonCounter].solution_test
-        targetIFrame.srcdoc = targetIFrame.srcdoc + 'testOK();';
-        //targetIFrame.srcdoc = targetIFrame.srcdoc +  ' ' + 'testOK(); ';
-        targetIFrame.srcdoc = targetIFrame.srcdoc + '<\/script>';
     }    
 
 
     function assert(condition, message) {
-        console.log("inside assert function");
+        document.write("Starting assert..<br>");
+        document.write(" - Checking: " + message + "<br>");
         if (!condition) {
             message = message || "Assertion failed";
             if (typeof Error !== "undefined") {
@@ -132,10 +124,12 @@
             }
             throw message; // Fallback
         }
+        document.write("Assert completed.<br>");
     };
 
      function testOK(condition, message) {
-        alert("SUCCESS!");
+        //alert("SUCCESS!");
+        document.write('The story has passed all the tests and can now be accepted.<br>Congratulations!')
         return 1;
     }
 
@@ -146,17 +140,19 @@
     function runTests(){
         var task_code = document.getElementById("dashboard-source").value;
         //Populating contents of iframe
-        let targetIFrame = document.getElementById("dashboard-myiframe")
+        let targetIFrame = document.getElementById("dashboard-myiframe");
         targetIFrame.srcdoc = "<script> " + task_code + " <\/script>";
         console.log("testing results...");
-        //targetIFrame.srcdoc = targetIFrame.srcdoc +'<script src="/static/js/library_test2.js"><\/script>';
-        targetIFrame.srcdoc = targetIFrame.srcdoc +'<script>' + assert.toString() + ' ' + testOK.toString() +'<\/script>';
-        targetIFrame.srcdoc = targetIFrame.srcdoc + '<script>';
 
-        targetIFrame.srcdoc = targetIFrame.srcdoc + stories[buttonCounter].solution_test
-        targetIFrame.srcdoc = targetIFrame.srcdoc + 'testOK();';
-        //targetIFrame.srcdoc = targetIFrame.srcdoc +  ' ' + 'testOK(); ';
-        targetIFrame.srcdoc = targetIFrame.srcdoc + '<\/script>';
+        targetIFrame.srcdoc =  targetIFrame.srcdoc + '<div style="color:blue;font-size:2em;">';
+            //targetIFrame.srcdoc = targetIFrame.srcdoc +'<script src="/static/js/library_test2.js"><\/script>';
+            targetIFrame.srcdoc = targetIFrame.srcdoc +'<script>' + assert.toString() + ' ' + testOK.toString() +'<\/script>';
+            targetIFrame.srcdoc = targetIFrame.srcdoc + '<script>';
+            targetIFrame.srcdoc = targetIFrame.srcdoc + stories[buttonCounter].solution_test
+            targetIFrame.srcdoc = targetIFrame.srcdoc + 'testOK();';
+            //targetIFrame.srcdoc = targetIFrame.srcdoc +  ' ' + 'testOK(); ';
+            targetIFrame.srcdoc = targetIFrame.srcdoc + '<\/script>';
+        targetIFrame.srcdoc =  targetIFrame.srcdoc + '</div>';
     }
 
      /*MAIN*/
