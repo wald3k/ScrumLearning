@@ -762,3 +762,27 @@ def scrum_poker_estimate(request, story_pk):
 		pg = Poker_game.objects.get(story=Story.objects.get(pk=story_pk))
 		pg.add_estimation(user_id,new_esimation)
 	return JsonResponse({'foo':'bar'}) 
+
+@login_required
+def sprint_retrospection(request, course_pk, sprint_number):
+	context = {}
+	course = Course.objects.get(pk=course_pk)
+	stories = Story.objects.filter(course = course, sprint = sprint_number, sprint_state = CHOICES_SPRINT_STATES[3][0] )#For Completed
+	story_list = []
+	#my_serializer = StorySerializer(stories, many=True)#many=True is used for serializing multiple objects
+	#return JsonResponse({'stories':my_serializer.data})
+	for s in stories: #for each story create a dict that will be appended to a list and converted to JSON.
+		temp_story = {}
+		temp_story['id'] = s.id
+		temp_story['name'] = s.name
+		temp_story['content'] = s.content
+		temp_story['solution'] = s.solution
+		temp_story['solution_test'] = s.solution_test
+		story_list.append(temp_story)
+		print(temp_story['id'])
+	context['json_stories'] = json.dumps(story_list)
+
+	context['course'] = course
+	context['progress_estimated'] = 13 + (int(sprint_number)-1) * 5
+	context['SPRINT_NUMBER'] = int(sprint_number)
+	return render(request, '3_sprint_retrospection.html',context)

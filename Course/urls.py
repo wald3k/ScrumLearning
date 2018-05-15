@@ -43,6 +43,11 @@ urlpatterns = [
     url(r'^scrum_poker/(?P<course_pk>\d+)/$', views.scrum_poker,name="scrum_poker"),
     url(r'^scrum_poker_get_stories/(?P<course_pk>\d+)/$', views.scrum_poker_get_stories,name="scrum_poker_get_stories"),
     url(r'^scrum_poker_estimate/(?P<story_pk>\d+)/$', views.scrum_poker_estimate,name="scrum_poker_estimate"),
+    #Retrospection
+    url(r'^3_sprint_retrospection/(?P<course_pk>\d+)/(?P<sprint_number>\d+)/$', views.sprint_retrospection,name="sprint_retrospection"),
+
+
+
 
 
 ]

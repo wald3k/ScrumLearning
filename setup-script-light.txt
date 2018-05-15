@@ -18,7 +18,7 @@ User.objects.create_superuser('admin', '', 'admin')
 from Profile.models import Profile
 #User.objects.create(username='test1',password='a',email='t1@wp.pl')
 
-HOW_MANY_USERS = 5
+HOW_MANY_USERS = 3
 for i in range (1,HOW_MANY_USERS):
 	new_user = User.objects.create(username='test' + str(i),email='t' + str(i) + '@wp.pl')
 	new_user.set_password('a')
