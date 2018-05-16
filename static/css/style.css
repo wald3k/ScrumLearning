@@ -243,10 +243,24 @@ header{
 }
 .btn-full:hover,
 .btn-ghost:hover{
-    opacity: 0.8;
+    opacity: 0.9;
     transition: opacity 0.2s;
 }
 
+.btn-full .blue{
+    background-color: #000;
+}
+
+.btn-logout:link,
+.btn-logout:visited{
+    background-color: #f46542;
+    border-radius: 10px;
+}
+
+.btn-logout:hover{
+    background-color: #c35431;
+    border-radius: 10px;
+}
 
 /*----------------------------------------*/
 /*SCRUM DETAILS SETTINGS*/
