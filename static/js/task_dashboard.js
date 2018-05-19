@@ -121,6 +121,7 @@
 
 
     function assert(condition, message) {
+        /*Function used for testing. If condition is not met then it throws an Exception.*/
         document.write("Starting assert..<br>");
         document.write(" - Checking: " + message + "<br>");
         if (!condition) {
@@ -149,17 +150,22 @@
         let targetIFrame = document.getElementById("dashboard-myiframe");
         targetIFrame.srcdoc = "<script> " + task_code + " <\/script>";
         console.log("testing results...");
-
-        targetIFrame.srcdoc =  targetIFrame.srcdoc + '<div style="color:blue;font-size:2em;">';
-        //targetIFrame.srcdoc = targetIFrame.srcdoc +'<script src="/static/js/library_test2.js"><\/script>';
-        targetIFrame.srcdoc = targetIFrame.srcdoc +'<script>' + assert.toString() + ' ' + testOK.toString() +'<\/script>';
-        targetIFrame.srcdoc = targetIFrame.srcdoc + '<script>';
-        targetIFrame.srcdoc = targetIFrame.srcdoc + stories[buttonCounter].solution_test
-        targetIFrame.srcdoc = targetIFrame.srcdoc + 'testOK();';
-        //targetIFrame.srcdoc = targetIFrame.srcdoc +  ' ' + 'testOK(); ';
-        targetIFrame.srcdoc = targetIFrame.srcdoc + '<\/script>';
-        targetIFrame.srcdoc =  targetIFrame.srcdoc + '</div>';
-        targetIFrame.focus();
+        try{
+            targetIFrame.srcdoc =  targetIFrame.srcdoc + '<div style="color:blue;font-size:2em;">';
+            //targetIFrame.srcdoc = targetIFrame.srcdoc +'<script src="/static/js/library_test2.js"><\/script>';
+            targetIFrame.srcdoc = targetIFrame.srcdoc +'<script>' + assert.toString() + ' ' + testOK.toString() +'<\/script>';
+            targetIFrame.srcdoc = targetIFrame.srcdoc + '<script>';
+            targetIFrame.srcdoc = targetIFrame.srcdoc + stories[buttonCounter].solution_test
+            targetIFrame.srcdoc = targetIFrame.srcdoc + 'testOK();';
+            //targetIFrame.srcdoc = targetIFrame.srcdoc +  ' ' + 'testOK(); ';
+            targetIFrame.srcdoc = targetIFrame.srcdoc + '<\/script>';
+            targetIFrame.srcdoc =  targetIFrame.srcdoc + '</div>';
+            targetIFrame.focus();
+        }
+        catch(error){
+            alert("ERROR");
+            targetIFrame.srcdoc = targetIFrame.srcdoc + error;
+        }
 
     }
 

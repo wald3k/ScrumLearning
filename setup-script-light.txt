@@ -61,9 +61,9 @@ program_1.files.add(material_1)
 program_1.save()
 
 #Creating stories for the program
-story_author = Profile.objects.get(pk=1)
-Story.objects.create(name='Snake_1',content='Create a board for a snake game.',author=story_author)
-Story.objects.create(name='Snake_2',content='Make red rectangle that moves on the board.',author=story_author)
+#story_author = Profile.objects.get(pk=1)
+#Story.objects.create(name='Snake_1',content='Create a board for a snake game.',author=story_author)
+#Story.objects.create(name='Snake_2',content='Make red rectangle that moves on the board.',author=story_author)
 
 #Creating actual courses
 course_1 = Course.objects.create(program=program_1)

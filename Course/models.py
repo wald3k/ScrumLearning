@@ -111,8 +111,9 @@ class Story(models.Model):
 	content = models.TextField()
 	author = models.ForeignKey('Profile.Profile', on_delete=models.CASCADE)
 	course = models.ForeignKey('Course', on_delete=models.CASCADE, null=True)
-	solution = models.TextField()
+	solution = models.TextField(blank=True, null = True)
 	solution_test = models.TextField()
+	perfect_solution = models.TextField(null=True)#An example how the Story could be solved
 	time = models.IntegerField(default=1000) #for planning poker & estimations
 	is_poker_finished = models.BooleanField(default=False)
 

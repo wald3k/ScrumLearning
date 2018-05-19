@@ -25,7 +25,7 @@
                     </ul>
                     <a href="{% url 'Profile:main' %}"><img class="welcome-avatar" src="{{ user.avatar_url }}"></a>
                     <a class="btn btn-ghost" href="#" onclick="document.getElementById('id01').style.display='block'">Join new courses</a>
-                    <a class="btn btn-ghost" href="{% url 'Profile:main' %}" onclick="document.getElementById('id01').style.display='block'">Show my courses</a>
+                    <a class="btn btn-ghost" href="{% url 'Course:course_list' %}" onclick="document.getElementById('id01').style.display='block'">Show my courses</a>
                     <a class="btn btn-logout" href="{% url 'Profile:logout_profile' %}"></i>Log me out</a>
 
 
