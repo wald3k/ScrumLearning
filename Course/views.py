@@ -207,8 +207,10 @@ If you succeed you can proceed to the next course section."""
 			helperMessage = ("See the current progress of the project. " +
 							"Analyze statistics of the project. Learn project roles, tasks etc.")
 
-		elif(course_stage == '5'):
-			helperMessage = "Choose stories to the project backlog. Other stories will not be included in the project."
+		elif(course_stage == '5'):#Product Backlog
+			helperMessage = """Choose stories to the project backlog. Other stories will not be included in the project.
+							   If stories are locked then they need to be estimated first (or their estimated time is still
+							   too long."""
 		elif(course_stage == '6'):
 			helperMessage = """This is a place to discuss the project details before proceeding with the next steps.
 								Such as choosing tasks for a Sprint"""
@@ -364,7 +366,7 @@ def get_course_stickers(request, course_pk):
 	if (request.method == 'GET'):
 		#stickers = course.story_set.filter((Q(backlog=1)) | Q(backlog=backlog)) #using Q to filter.
 		stickers = course.story_set.all()
-		stickers = serializers.serialize('json', stickers, fields=('id','backlog','sprint','sprint_state','name','content','time' ))
+		stickers = serializers.serialize('json', stickers, fields=('id','backlog','sprint','sprint_state','name','content','time','is_poker_finished'))
 		context['stickers'] = stickers
 		print("get_course_stickers::" + stickers)
 	return JsonResponse({'stickers':stickers})
@@ -385,7 +387,7 @@ def get_course_sprint_backlog_stickers(request):
 		context['course'] = course
 		stickers = course.story_set.filter(Q(Q(backlog=1) & Q(sprint = 0)) | Q(Q(backlog=1) & Q(sprint = sprint)) | Q(Q(backlog=1) & Q(sprint = -1)) ) # (backlog1 and sprint 0) or (backlog1 and sprint as argument)
 		print (stickers.query)
-		stickers = serializers.serialize('json', stickers, fields=('id','backlog','sprint','sprint_state','name','content','time' ))
+		stickers = serializers.serialize('json', stickers, fields=('id','backlog','sprint','sprint_state','name','content','time','is_poker_finished' ))
 		context['stickers'] = stickers
 		print("get_course_sprint_stickers:" + stickers)
 		print("Tutaj!!!!" + sprint)
@@ -401,7 +403,7 @@ def get_course_sprint_stickers(request):
 		course = Course.objects.get(pk=course_pk)
 		context['course'] = course
 		stickers = course.story_set.filter(Q(backlog=1) & Q(sprint=sprint) ) #using Q to filter.
-		stickers = serializers.serialize('json', stickers, fields=('id','backlog','sprint','sprint_state','name','content','time' ))
+		stickers = serializers.serialize('json', stickers, fields=('id','backlog','sprint','sprint_state','name','content','time','is_poker_finished' ))
 		context['stickers'] = stickers
 		print("get_course_sprint_stickers:" + stickers)
 		print("Tutaj!!!!")

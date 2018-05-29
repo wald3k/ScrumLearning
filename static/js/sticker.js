@@ -146,6 +146,7 @@
         this.backlogPrev = null;
         this.severId;
         this.time = null;
+        this.isPokerFinished = false;
         //Declaring sticker functions
         this.updateBacklog = function(newBacklog){
             /*
@@ -272,6 +273,7 @@
                     i.e. color, mouse events, title, content etc.
             */
             let which = 0;
+            let MAX_STORY_TIME_LIMIT = 50;
            //Using global WHICH_BACKLOG variable to determine type of backlog. 
             this.textareaEl.setAttribute('readonly', 'readonly');
 
@@ -324,14 +326,13 @@
                         break;
                 }
             }
-            if(this.time > 50 || this.time == null ){
-                /*If time of sticker was not estimated in Scrum Poker
-                then show it greyed-out, without possibility to move.
-                //TODO make it dependent rather on some Boolean value
-                i.e. is_estimated, then by time of a Story.
+            if(this.isPokerFinished == false || this.time == null){
+                /*If time of sticker was not estimated or a  Scrum Poker Game
+                has not been finished yet, then show it greyed-out, without possibility to move.
                 */
                 this.stickerClassName = "sticker-locked";
             }
+     
             this.barEl.classList.add(this.stickerClassName);
             this.stickerEl.classList.add('sticker');
             this.stickerEl.appendChild(this.barEl);
@@ -570,7 +571,6 @@
             //First check what kind of backlog we are working on.
             if(WHICH_BACKLOG == 'backlog'){
             	story_stage = data[i]['fields']['backlog'];
-
                 if(story_stage == 0  || story_stage == -1){
                     temp_sticker.posX = log_1.left;
                     temp_sticker.posY = log_1_tempHeight;
@@ -650,6 +650,7 @@
             temp_sticker.sprint =  data[i]['fields']['sprint'];
             temp_sticker.sprintState = data[i]['fields']['sprint_state'];  
             temp_sticker.time =  data[i]['fields']['time'];
+            temp_sticker.isPokerFinished = data[i]['fields']['is_poker_finished'];
             stickers.push(temp_sticker);
             console.log("Creating sticker: poxS " + temp_sticker.posX + " posY: " + temp_sticker.posY  +"id= " + temp_sticker.id + " name = " + temp_sticker.name + " text = " + temp_sticker.content + " backlog: "+ temp_sticker.backlog + " sprint: " + temp_sticker.sprint + " sprint_state: " + temp_sticker.sprintState);
         }
@@ -722,7 +723,12 @@
     document.querySelector('#new_story_submit').onclick  = displayNewSticker;// 'send_new_story' wa used previously;
     document.querySelector('#new_story_name').onclick  = clear_field_value;
     document.querySelector('#new_story_content').onclick  = clear_field_value;
-    //Populating stickers array with stickers from server.
+    /*Populating stickers array with stickers from server, depending on which backlog was chosen.
+    So far these are available types of ,,backlog''.
+        - backlog
+        - sprint backlog
+        - sprint board backlog
+    */
     var stickers = []
     if(WHICH_BACKLOG == 'backlog'){
         ajaxCall("GET", "/course/get_course_stickers/" + courseId + "/", {}, populateStickers);//First need to download stickers from server

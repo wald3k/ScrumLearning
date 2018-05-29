@@ -602,6 +602,9 @@ left-menu {
 }
 
 /*Menu Header Styles*/
+.menu-item{
+    min-width: 200px;
+}
 .menu-item h4 {
   color: #fff;
   font-size: 1.2em;
@@ -1434,12 +1437,13 @@ color:#321268;
 
 .scrum-poker-main{
     background: #ddd;
-    font-size: 1.5em;
+    font-size: 1.2em;
     text-align: center;
-    width: 50%;
+    width: 90%;
     margin: auto;
     padding: 1%;
     border-radius: 5px;
+    min-width: 500px;
 
 }
 .scrum-poker-main .sticker{
@@ -1504,6 +1508,10 @@ color:#321268;
         min-height: 100px;
         min-width: 100px:
         border-width: 3px;
+    }
+
+    .scrum-poker-main{
+        width: 90%;
     }
 }
 .poker-card-author{
