@@ -1,6 +1,7 @@
 .sticker{
     min-height: 100px;
     min-width: 100px;
+    max-width:  300px;
     position: absolute;
     left: 0;
     top: 0;
@@ -15,7 +16,7 @@
 .sticker-header-green,
 .sticker-header-orange,
 .sticker-locked{
-    height: 25px;
+    min-height: 25px;
     width: 100%;
     text-align: center;
     /*  Stop users from selecting text inside div*/
@@ -54,9 +55,10 @@
 .sticker textarea{
     box-sizing: border-box;
     min-height: 100px;
-    min-width: 100px;
+    min-width: 100%;
+    max-width: 100%;
     background: transparent;
-    border: none;
+    border: none;    
 }
 .sticker:hover{
     z-index: 5;
