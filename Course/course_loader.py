@@ -15,7 +15,7 @@ In future maybe there should be a special panel that would enable to upload quiz
 """
 
 def quiz_init():
-	cwd = os.path.join(os.getcwd(),'Course/quiz_data.json')
+	cwd = os.path.join(os.getcwd(),'Course/quiz_1.json')
 	print(cwd)
 	with open(cwd) as data_file:    
 		data = json.load(data_file)
@@ -24,7 +24,7 @@ def quiz_init():
 	new_quiz = Quiz.objects.create(name=quiz_name)
 	for i in range(len(data['questions'])):#Looping through questions.
 		question_text = data['questions'][i]['question']
-		correct_answer_number = data['questions'][i]['correct']		
+		correct_answer_number = data['questions'][i]['correct']#Assuming that JSON file specifies answers starting from 0.		
 		q = Question.objects.create(question_text=question_text,quiz = new_quiz)
 		for j in range(len(data['questions'][i]['answers'])):#Looping through answers for the question.
 			answer_text = data['questions'][i]['answers'][j]
@@ -38,4 +38,4 @@ def quiz_init():
 	# q1 = Question.objects.create(question_text="Does scrum have rules, or just guidelines?",quiz = quiz_1)
 	# a_q1_1 = Answer.objects.create(text="Scrum has a few simple rules",question=q1)
 	# a_q1_1.is_valid = True
-# a_q1_2 = Answer.objects.create(text="Scrum has guidelines only, no rules at all.",question=q1)
+	# a_q1_2 = Answer.objects.create(text="Scrum has guidelines only, no rules at all.",question=q1)

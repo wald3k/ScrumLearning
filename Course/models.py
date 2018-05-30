@@ -32,6 +32,10 @@ class Quiz(models.Model):
 		verbose_name = 'Quiz'
 		verbose_name_plural = 'Quizes'
 
+	def __str__(self):
+		return self.name
+
+
 class Question(models.Model):
 	"""
 	Represents a single Question object that has a relation with one specific Quiz object.

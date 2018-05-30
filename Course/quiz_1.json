@@ -1,0 +1,103 @@
+{
+	"name":"Basic Scrum Guides Quiz",
+	"questions":[
+		{
+			"question":"Does scrum have rules, or just guidelines?",
+			"answers":[
+				"Scrum has a few simple rules",
+				"Scrum has guidelines only, no rules at all."
+			],
+			"correct":"0"
+		},
+		{
+			"question":"When should a retrospective meeting be held?",
+			"answers":[
+				"At the end of each sprint, after the sprint review meeting",
+				"At the end of each sprint, before the sprint review meeting",
+				"Every now and then, when the team wants to improve",
+				"Only at the end of a project"
+			],
+			"correct":"1"
+		},
+				{
+			"question":"Which one of the following is not a Scrum role?",
+			"answers":[
+				"Product Owner",
+				"Scrum Master",
+                "Product Manager",
+                "Team"
+			],
+			"correct":"2"
+		},
+		{
+			"question":"Which of the following meeting is not part of Scrum?",
+			"answers":[
+				"Product review meeting",
+				"Sprint review meeting",
+                "Sprint planning meeting",
+                "Sprint retrospective meeting"
+			],
+			"correct":"0"
+		},      
+		{
+			"question":"What is the duration of a sprint in Scrum?",
+			"answers":[
+				"4 weeks",
+				"28-30 days",
+                "Anything between 2 - 6 weeks",
+                "30 days"
+			],
+			"correct":"2"
+		},    
+		{
+			"question":"What is the goal of the Daily Scrum?",
+			"answers":[
+				"To ensure the team finishes the Sprint Backlog at the end of the Sprint",
+				"To report progress to the ScrumMaster",
+                "To answer the Three Questions",
+                "To re-plan the work for the next day so the Sprint achieves the Sprint Goal"
+			],
+			"correct":"3"
+		},    
+		{
+			"question":"The Product Backlog is",
+			"answers":[
+				"Unordered",
+				"In delivery order",
+                "In priority order",
+                "In value and cost order"
+			],
+			"correct":"1"
+		},    
+		{
+			"question":"The Product Backlog is",
+			"answers":[
+				"a list of requirements",
+				"a list of Enabling Specifications",
+                "a list of descriptions of product features and deliverables",
+                "a roadmap"
+			],
+			"correct":"2"
+		},      
+		{
+			"question":"Which best describes the relationship between the Product Owner and the Development/Delivery Team?",
+			"answers":[
+				"The PO defines the Product Backlog contents and the Developers provide constraints that the PO uses to properly order it",
+				"The whole Scrum Team comes to a consensus on Product Backlog content",
+                "The PO defines the ROI of each PBI and the Developers define cost, and the rest is just a mechanical reordering to optimize profit",
+                "The PO and Developers define the Product Backlog together, but the PO has final say on the ordering and content"
+			],
+			"correct":"3"
+		},     
+		{
+			"question":"Which of the following questions is not relevant for regular Scrum Meeting?",
+			"answers":[
+				"What have you done since the last Daily Scrum regarding this project?",
+				"What will you do between now and the next Daily Scrum meeting regarding this project?",
+                "Would you be able to finish your work on time?",
+                "What impedes you from performing your work as effectively as possible?"
+			],
+			"correct":"2"
+		}  		
+	]
+}
