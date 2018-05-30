@@ -82,6 +82,7 @@ header{
     display: inline-block;
     border-right: 1px solid rgba(154, 152, 152, 0.82);
     padding:0 30px;
+    vertical-align: middle;
 }
 .main-nav ul li:last-child{
     border: 0px;
@@ -101,6 +102,14 @@ header{
     text-decoration: none;
     border-bottom: 5px solid #a2e622;
     transition: border 0.2s, font-weight 0.2s;
+}
+/*Logout icon settings*/
+.main-nav i{
+    font-size: 1.3em;
+    font-weight: bold;
+}
+.main-nav i:hover{
+    color: red;
 }
 /*----------------------------------------*/
 /*ROW SETTINGS*/
