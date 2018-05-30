@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^2_roles_in_project/(?P<course_pk>\d+)/$', views.roles_in_project,name="roles_in_project"),
     url(r'^set_roles/$', views.set_roles,name="set_roles"),   
     url(r'^current_progress/(?P<course_pk>\d+)/$', views.current_progress,name="current_progress"),  
+    url(r'^who_passed/$', views.who_passed_quizes,name="who_passed_quizes"),#POST request
     # Backlog links
     url(r'^2_product_backlog/(?P<course_pk>\d+)/$', views.product_backlog,name="product_backlog"),
     url(r'^3_sprint_backlog/(?P<course_pk>\d+)/(?P<sprint_number>\d+)/$', views.sprint_backlog,name="sprint_backlog"),

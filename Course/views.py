@@ -352,6 +352,24 @@ def current_progress(request, course_pk):
 
 	return render(request, '2_current_progress.html',context)
 
+@login_required
+def who_passed_quizes(request):
+	context = {}
+	if (request.method == 'POST'):
+		course_pk = request.POST.get('course_id')
+		print(course_pk)
+		course = Course.objects.get(pk=course_pk)
+		context['course'] = course
+		quiz_results = QuizResult.objects.filter(course = course) # (backlog1 and sprint 0) or (backlog1 and sprint as argument)
+		who = []#Will store list of quizresults for a specific course insance
+		for qr in quiz_results:
+			print(qr.profile.username)
+			who.append((qr.profile.username, qr.result,qr.passed))#[('username1', result_as_int, passed_as_boolean),...]
+		context['who_passed'] = who
+		print(who)
+	return JsonResponse({'who_passed':who})
+
+
 ########################	START OF BACKLOGS 	###################################################################
 
 @login_required

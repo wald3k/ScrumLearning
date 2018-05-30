@@ -69,10 +69,36 @@
 		});
 	}
 
+	var fill_quiz_results = function(){
+		/*	
+			Sends POST request to the server to get a list of profiles and their quiz scores.
+			//TODO Code situations when there are multiple quizes for a Course instance.
+		*/
+		let data = new FormData();
+		data.append('course_id', courseId);
+		var whoPassed;
+		ajaxCall('POST','/course/who_passed/', data, function(data){
+				whoPassed = JSON.parse(data)['who_passed']
+				console.log(whoPassed);
+				for (let i = 0; i < whoPassed.length; i++){
+					console.log(whoPassed[i][0]);
+					console.log(whoPassed[i][1]);
+					document.getElementById("quiz_points_" + whoPassed[i][0]).innerHTML =  whoPassed[i][1];
+					document.getElementById("quiz_result_" + whoPassed[i][0]).innerHTML =  whoPassed[i][2];
+
+				}
+			}
+		);
+	}
 	/**************************/
 	/* 			MAIN		  */
 	/**************************/
 	draw_chart_stories(); //Draw chart for stories.
 	calculateTime();
+	//Check who passed quizes
+	fill_quiz_results();
+
+
+
 }());//End of IIFE function.
 

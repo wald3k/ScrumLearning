@@ -12,6 +12,25 @@ The current progress is: {{progress_current_percentage}}%<br>
 Deadline till: {{ deadline }}
 <div id="days-left"></div>
 <h1>Participants of the course</h1>
+<div>
+	<h2>Quiz results</h2>
+	<table style="width:50%">
+	  <tr>
+	    <th align="left">Username</th>
+	    <th align="left">Points</th>
+	    <th align="left">Passed quiz?</th>
+	  </tr>
+		{% for p in profiles %}
+		  <tr>
+		    <td>{{ p.username }}</th>
+		   	<td id="quiz_points_{{ p.username }}">not taken</td>
+		   	<td id="quiz_result_{{ p.username }}">false</td>
+		  </tr>
+		{% endfor %}
+	</table>
+</div>
+
+<h2>Roles in the Scrum team:</h2>	
 <table style="width:50%">
   <tr>
     <th align="left">Username</th>
@@ -32,7 +51,6 @@ Deadline till: {{ deadline }}
 	  </tr>
 	{% endfor %}
 </table>
-
 
 <h1>Stories</h1>
 <table style="width:50%">
@@ -88,8 +106,6 @@ Shouts total: {{course.shout_set.all|length}}<br>
    var stories_backlog_primary_1 = "{{stories_backlog_primary_1|length}}";
    var stories_backlog_secondary_0 = "{{stories_backlog_secondary_1|length}}";
    var stories_backlog_secondary_1 = "{{stories_backlog_secondary_1|length}}";
-
-
 </script>
 <script src="{% static 'js/current_progress.js' %}"></script>
 {% endblock %}

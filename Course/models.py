@@ -387,3 +387,5 @@ class QuizResult(models.Model):
 			self.result = points
 		self.save()
 
+	def __str__(self):
+		return str(self.course) +  ", Quiz: " + str(self.quiz.id) + ", User" + self.profile.username + ", Passed: " + str(self.passed)

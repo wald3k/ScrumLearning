@@ -34,5 +34,17 @@ class StorySerializer(serializers.Serializer):
 
 
 
+class ProgramSerializer(serializers.Serializer):
+    name = serializers.CharField()
+
+class CourseSerializer(serializers.Serializer):
+    author = ProfileSerializer()
+    program = ProgramSerializer()
+
+class QuizResultSerializer(serializers.Serializer):
+    author = ProfileSerializer()
+    course = CourseSerializer()
+    result = serializers.IntegerField()
+    passed = serializers.BooleanField()
 
 
