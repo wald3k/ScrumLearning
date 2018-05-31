@@ -13,8 +13,8 @@
 		    <div class="tutorial-header">
 		        {{f.desc}}
 		    </div>
-		    <div class="tutorial-content">
-		        <embed src="/{{f.file}}"/>
+		    <div id="{{f.file}}" class="tutorial-content"><!-- Use file location as an id -->
+		        <embed id="embed_{{f.file}}" src=""/>
 		    </div>
 		</div>
 	{% endfor %}
@@ -34,12 +34,16 @@
 	        }
 	        //Getting tutorial-content class.
 	        var content_element = ev.target.nextElementSibling;
+	        var embed_element = document.getElementById("embed_"+content_element.id); 
 	        if(content_element.classList.contains("active")){
 	            content_element.className = "tutorial-content";
+	            embed_element.src = "";
 	        }
 	        else{
-	            content_element.className = "tutorial-content active";
-	            content_element.firstChild.style.height = get_height()  + "px";
+	            content_element.className = "tutorial-content active";	     
+	            embed_element.style.height = get_height()  + "px";       
+	        	var embed_source_file = "/" + content_element.id; 
+	            embed_element.src = embed_source_file;
 	        }
 	    }
 	    document.addEventListener('click', toggle_tutorial, false);
