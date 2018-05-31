@@ -1193,7 +1193,24 @@ color:#321268;
 	font-size:3em;
 	float:right;
 }
-
+footer{
+    background-color: rgba(20,20,50,0.15);
+    border-radius: 5px;
+    margin: auto;
+    text-align: center;
+    padding: 1%;
+}
+footer .avatar{
+    max-width: 100px !important;
+    vertical-align: middle;
+    margin-right:1%;
+}
+.footer-title{
+    font-size: 1.2em;
+}
+.footer-content{
+    font-size: 0.9em;
+}
 /*----------------------------------------*/
 /*       Modal helper                  */
 /*----------------------------------------*/
