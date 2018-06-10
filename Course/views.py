@@ -350,6 +350,10 @@ def current_progress(request, course_pk):
 	#Grabbing shouts
 	shouts = course.shout_set.all()
 	context['json_shouts'] = serializers.serialize('json', shouts, fields=('id','author','text','date_created','course_stage' ))
+	charts = chart()
+	context['chart_schedule'] = json.dumps(charts['chart_schedule'])
+	context['chart_finished'] = json.dumps(charts['chart_finished'])
+	context['chart_timeline'] =  json.dumps(charts['chart_timeline'])
 
 	return render(request, '2_current_progress.html',context)
 
@@ -809,7 +813,7 @@ def sprint_retrospection(request, course_pk, sprint_number):
 	return render(request, '3_sprint_retrospection.html',context)
 
 def chart():
-	"""Returns json data that will be a source for a frontend to draw burndown charts."""
+	"""Returns dictionary that contains arrays with chart data that can be used to draw burndown charts."""
 	course = Course.objects.get(pk=1)
 	delta_days = (course.deadline - course.created).days #Number of days from course creation to deadline
 	stories_all = Story.objects.filter(course=course,backlog=1) #Stories from this course and from Product Backlog(1)
@@ -821,7 +825,7 @@ def chart():
 	#Prepare chart for completed tasks
 	points_stories_finished = [x.time for x in stories_finished] #List of stories points
 	points_stories_finished = reduce(lambda x,y: x + y,points_stories_finished) #Summing story points.
-	factor_finished = points_stories_finished / (timezone.now() - course.created).days
+	factor_finished = points_stories_finished / (timezone.now() - course.created +  timezone.timedelta(days=1)).days
 	chart_finished = []
 
 	#Print charts
@@ -836,5 +840,13 @@ def chart():
 		chart_schedule.append(round(points_stories_all - (i * factor_linear + factor_linear),2))
 	print(chart_schedule)
 	for i in range(delta_days):
-		chart_finished.append(round(points_stories_all - (i * factor_finished + factor_finished),2))
+		val_to_append = round(points_stories_all - (i * factor_finished + factor_finished),2)
+		if(val_to_append >= 0): #only append values if there are still some story points to be completed.
+			chart_finished.append(val_to_append)
 	print(chart_finished)
+	charts = {}
+	charts['chart_schedule'] = chart_schedule
+	charts['chart_finished'] = chart_finished
+	charts['chart_timeline'] = [x for x in range(delta_days)]
+	print("Returned data for charts.")
+	return charts

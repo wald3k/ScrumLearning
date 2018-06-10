@@ -111,6 +111,12 @@ Shouts total: {{course.shout_set.all|length}}<br>
    var stories_backlog_primary_1 = "{{stories_backlog_primary_1|length}}";
    var stories_backlog_secondary_0 = "{{stories_backlog_secondary_1|length}}";
    var stories_backlog_secondary_1 = "{{stories_backlog_secondary_1|length}}";
+   var chart_schedule = JSON.parse("{{chart_schedule|escapejs}}");
+   var chart_finished = JSON.parse("{{chart_finished|escapejs}}");
+   var chart_timeline = JSON.parse("{{chart_timeline|escapejs}}");
+   
+   console.log(chart_finished)
+
 </script>
 <script src="{% static 'js/current_progress.js' %}"></script>
 {% endblock %}

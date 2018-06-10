@@ -91,29 +91,26 @@
 		);
 	}
 
-
-
-
-
 var draw_burndown_chart = function(){
-		var arr1=[5,4,3,2,1];
-		var arr2=[5,3,2,1,0];
+		//var arr1=[5,4,3,2,1];
+		//var arr2=[5,3,2,1,0];
+		//var timelineArr=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]
 		var ctx = document.getElementById("burndownChart").getContext('2d');
 		var myChart = new Chart(ctx, {
 		    type: 'line',
 			data: {
-				labels: ['January', 'February'],
+				labels: chart_timeline, //global array passed from server to template
 				datasets: [{
 					label: 'Ideal burndown',
 					backgroundColor: 'rgba(255, 99, 130, 0.2)',
 					borderColor: 'rgba(0, 99, 0, 0.8)',
-					data: arr1,
+					data: chart_schedule, //global array passed from server to template
 				}, {
 					label: 'Actual burndown',
 					fill: false,
 					backgroundColor: 'rgba(255, 99, 90, 0.2)',
 					borderColor: 'rgba(255, 0, 0, 0.8)',
-					data: arr2,
+					data: chart_finished, //global array passed from server to template
 				}]
 			},
 		    options: {
