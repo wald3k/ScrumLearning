@@ -90,10 +90,53 @@
 			}
 		);
 	}
+
+
+
+
+
+var draw_burndown_chart = function(){
+		var arr1=[5,4,3,2,1];
+		var arr2=[5,3,2,1,0];
+		var ctx = document.getElementById("burndownChart").getContext('2d');
+		var myChart = new Chart(ctx, {
+		    type: 'line',
+			data: {
+				labels: ['January', 'February'],
+				datasets: [{
+					label: 'Ideal burndown',
+					backgroundColor: 'rgba(255, 99, 130, 0.2)',
+					borderColor: 'rgba(0, 99, 0, 0.8)',
+					data: arr1,
+				}, {
+					label: 'Actual burndown',
+					fill: false,
+					backgroundColor: 'rgba(255, 99, 90, 0.2)',
+					borderColor: 'rgba(255, 0, 0, 0.8)',
+					data: arr2,
+				}]
+			},
+		    options: {
+		    	responsive: false, //enables chart to resize to its canvas.
+		        scales: {
+		            yAxes: [{
+		                ticks: {
+		                    beginAtZero:true
+		                }
+		            }]
+		        }
+		    }
+		});
+	}
+
+
+
+
 	/**************************/
 	/* 			MAIN		  */
 	/**************************/
 	draw_chart_stories(); //Draw chart for stories.
+	draw_burndown_chart();
 	calculateTime();
 	//Check who passed quizes
 	fill_quiz_results();

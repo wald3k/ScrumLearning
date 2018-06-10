@@ -3,3 +3,5 @@ setup-script.txt
 */migrations/*
 */__pycache__/*
 *.pyc
+*.mp3
+*.mp4

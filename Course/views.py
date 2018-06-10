@@ -14,6 +14,7 @@ from django.core.paginator import Paginator
 from .forms import StoryForm
 from django.core import serializers #Used i.e. in user roles serialization of profiles.
 from django.db.models import Q #For more advanced queries (and or etc.)
+from functools import reduce
 @login_required
 def course_choose(request,course_name):
 	context = {}
@@ -806,3 +807,34 @@ def sprint_retrospection(request, course_pk, sprint_number):
 	context['progress_estimated'] = 13 + (int(sprint_number)-1) * 5
 	context['SPRINT_NUMBER'] = int(sprint_number)
 	return render(request, '3_sprint_retrospection.html',context)
+
+def chart():
+	"""Returns json data that will be a source for a frontend to draw burndown charts."""
+	course = Course.objects.get(pk=1)
+	delta_days = (course.deadline - course.created).days #Number of days from course creation to deadline
+	stories_all = Story.objects.filter(course=course,backlog=1) #Stories from this course and from Product Backlog(1)
+	stories_finished = stories_all.filter(sprint_state=3) #Take only finished stories 
+	points_stories_all = [x.time for x in stories_all] #List of stories points
+	points_stories_all = reduce(lambda x,y: x + y,points_stories_all) #Summing story points.
+	chart_schedule = [] #Will hold array of incremented progress that should be done based on linear estimation.
+	factor_linear = points_stories_all / delta_days
+	#Prepare chart for completed tasks
+	points_stories_finished = [x.time for x in stories_finished] #List of stories points
+	points_stories_finished = reduce(lambda x,y: x + y,points_stories_finished) #Summing story points.
+	factor_finished = points_stories_finished / (timezone.now() - course.created).days
+	chart_finished = []
+
+	#Print charts
+	print(points_stories_all)
+	print(points_stories_finished)
+
+	#Print speed factors
+	print(factor_linear)
+	print(factor_finished)
+
+	for i in range(delta_days):
+		chart_schedule.append(round(points_stories_all - (i * factor_linear + factor_linear),2))
+	print(chart_schedule)
+	for i in range(delta_days):
+		chart_finished.append(round(points_stories_all - (i * factor_finished + factor_finished),2))
+	print(chart_finished)

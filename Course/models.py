@@ -289,7 +289,7 @@ class Course(models.Model):
 	_progress = models.IntegerField(choices=COURSE_STATES, default=0)
 
 	def __str__(self):
-		return "Course: " + self.program.name + " === course id: " + str(self.pk)
+		return "Course: " + self.program.name + " === course id: " + str(self.pk) + " created: " + str(self.created)
 
 	def save(self, *args, **kwargs):
 		""" On save, update timestamps """

@@ -24,12 +24,53 @@
             shippableProduct = shippableProduct + 'document.write("<br><br>");';*/
             shippableProduct = shippableProduct + stories[i].solution;
         }
-        targetIFrame.srcdoc = "<body><\/body>";
-        targetIFrame.srcdoc = targetIFrame.srcdoc  + "<script> "  +  shippableProduct +  "<\/script>";
+      
+
+
+  targetIFrame.srcdoc = `<head>        
+<style>
+
+h1{
+    margin-left:7%;
+    margin-bottom:0;
+    padding:0;
+}
+    BUTTON {
+    color:black;
+    font-size:1.5em;
+    padding:2%;
+    margin:2%;
+    border-radius:10px;
+    border-color: red;
+
+    }
+    BUTTON:hoover{
+        pointer:cursor;
+    }
+    
+    .board-class{
+        display:block;
+        border: 10px solid;
+        border-color: green;
+        margin:1%;
+        z-index:8;
+        position:absolute;
+    }
+    
+    .points-container{
+        display:block-inline;
+        margin: auto;
+        padding:5px;
+        align: center;
+    }
+</style></head>`;
+
+        targetIFrame.srcdoc = targetIFrame.srcdoc + "<body><\/body>";
+        targetIFrame.srcdoc = targetIFrame.srcdoc  + "<script> "  +  shippableProduct + "var snake;var board;var game;var lblPoints;createWelcomeScreen();<\/script>";
         targetIFrame.style = 'overflow:hidden;height:700px;width:100%;';
+        console.log(targetIFrame.srcdoc);
         console.log(targetIFrame.contentWindow.document.body);
         targetIFrame.focus();
-
     }
 
 
