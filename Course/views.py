@@ -823,9 +823,12 @@ def chart():
 	chart_schedule = [] #Will hold array of incremented progress that should be done based on linear estimation.
 	factor_linear = points_stories_all / delta_days
 	#Prepare chart for completed tasks
-	points_stories_finished = [x.time for x in stories_finished] #List of stories points
-	points_stories_finished = reduce(lambda x,y: x + y,points_stories_finished) #Summing story points.
-	factor_finished = points_stories_finished / (timezone.now() - course.created +  timezone.timedelta(days=1)).days
+	try:
+		points_stories_finished = [x.time for x in stories_finished] #List of stories points
+		points_stories_finished = reduce(lambda x,y: x + y,points_stories_finished) #Summing story points.
+		factor_finished = points_stories_finished / (timezone.now() - course.created +  timezone.timedelta(days=1)).days
+	except:
+		factor_finished = 0
 	chart_finished = []
 
 	#Print charts
