@@ -272,6 +272,20 @@ header{
 }
 
 /*----------------------------------------*/
+/*Program/Course classes*/
+/*----------------------------------------*/
+.program-title{
+    text-align: center;
+    font-size: 1.5em;
+    padding-bottom: 2%;
+}
+.program-description{
+    text-align: center;
+    font-size: 1.2em;
+    padding: 3% auto;
+    margin: 1% auto 5%;
+}
+/*----------------------------------------*/
 /*SCRUM DETAILS SETTINGS*/
 /*----------------------------------------*/
 .scrum-board{
