@@ -63,7 +63,7 @@ class Profile(AbstractUser):
 
     def image_tag(self):
         if self.avatar and hasattr(self.avatar, 'url'):
-            return mark_safe('<img src="/%s" width="50" height="50" title="%s"/>' % (self.avatar,self.username))
+            return mark_safe('<img src="/media/%s" width="50" height="50" title="%s"/>' % (self.avatar,self.username))
         else:
             return mark_safe('<img src="/%s" width="50" height="50" />' % ('static/defaults/!default_user_avatar/user.gif'))
     image_tag.short_description = 'User Avatar'

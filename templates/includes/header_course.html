@@ -4,7 +4,7 @@
             <div class=logo>
                <a href="{% url 'index_page' %}">SCRUM E-Learning</a>
             </div>
-            <img src="/{{ request.user.avatar_url }}" title="Logged as: {{request.user.username}}" style="height: 50px; width: auto;margin-left: 10px;">
+            <img src="{{ request.user.avatar_url }}" title="Logged as: {{request.user.username}}" style="height: 50px; width: auto;margin-left: 10px;">
 
             <div class="main-nav">
                 <ul>
