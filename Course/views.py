@@ -350,10 +350,13 @@ def current_progress(request, course_pk):
 	#Grabbing shouts
 	shouts = course.shout_set.all()
 	context['json_shouts'] = serializers.serialize('json', shouts, fields=('id','author','text','date_created','course_stage' ))
-	charts = chart()
-	context['chart_schedule'] = json.dumps(charts['chart_schedule'])
-	context['chart_finished'] = json.dumps(charts['chart_finished'])
-	context['chart_timeline'] =  json.dumps(charts['chart_timeline'])
+	try:
+		charts = chart()
+		context['chart_schedule'] = json.dumps(charts['chart_schedule'])
+		context['chart_finished'] = json.dumps(charts['chart_finished'])
+		context['chart_timeline'] =  json.dumps(charts['chart_timeline'])
+	except:
+		pass
 
 	return render(request, '2_current_progress.html',context)
 
@@ -818,10 +821,13 @@ def chart():
 	delta_days = (course.deadline - course.created).days #Number of days from course creation to deadline
 	stories_all = Story.objects.filter(course=course,backlog=1) #Stories from this course and from Product Backlog(1)
 	stories_finished = stories_all.filter(sprint_state=3) #Take only finished stories 
-	points_stories_all = [x.time for x in stories_all] #List of stories points
-	points_stories_all = reduce(lambda x,y: x + y,points_stories_all) #Summing story points.
 	chart_schedule = [] #Will hold array of incremented progress that should be done based on linear estimation.
-	factor_linear = points_stories_all / delta_days
+	try:
+		points_stories_all = [x.time for x in stories_all] #List of stories points
+		points_stories_all = reduce(lambda x,y: x + y,points_stories_all) #Summing story points.
+		factor_linear = points_stories_all / delta_days
+	except:
+		factor_linear = 0
 	#Prepare chart for completed tasks
 	try:
 		points_stories_finished = [x.time for x in stories_finished] #List of stories points
