@@ -47,4 +47,11 @@ class QuizResultSerializer(serializers.Serializer):
     result = serializers.IntegerField()
     passed = serializers.BooleanField()
 
+class FinalReviewSerializer(serializers.Serializer):
+    #course = CourseSerializer()
+    author = ProfileSerializer()
+    target = ProfileSerializer()
+    mark = serializers.IntegerField()
+    review = serializers.CharField()
+
 

@@ -46,8 +46,7 @@ urlpatterns = [
     url(r'^scrum_poker_estimate/(?P<story_pk>\d+)/$', views.scrum_poker_estimate,name="scrum_poker_estimate"),
     #Retrospection
     url(r'^3_sprint_retrospection/(?P<course_pk>\d+)/(?P<sprint_number>\d+)/$', views.sprint_retrospection,name="sprint_retrospection"),
-
-
+    url(r'^final_review/(?P<course_pk>\d+)/(?P<review_type>\w+)/$', views.final_review,name="final_review"),
 
 
 

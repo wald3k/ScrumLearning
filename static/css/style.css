@@ -859,8 +859,9 @@ transition: visibility 0s linear 0s, opacity 3000ms;
 /*          1_roles_in_project            */
 /*----------------------------------------*/
 .user-role-main{
-    margin: 0 auto;
-    padding: 1%;
+    margin-left: 110px;
+    min-width: 80%;
+    padding: 0%;
     background: #dedede;
     text-align: center;
     border-radius: 3%;
@@ -890,8 +891,9 @@ transition: visibility 0s linear 0s, opacity 3000ms;
     border-bottom: 2px solid #cd3;
 }
 .user-role-main i{
-    font-size: 100px;
-    padding: 15% 0;
+    font-size: 10em;
+    padding: 0;
+    padding-top:2%;
     margin: 0 auto;
     width: 30%;
 }
@@ -909,10 +911,18 @@ transition: visibility 0s linear 0s, opacity 3000ms;
 }
 #section-update{
     padding: 2%;
+    font-size: 1.1em !important;
 }
 #img_avatar{
     max-width: 20%;
     height: auto;
+}
+
+@media screen and (max-width: 992px) {
+    .user-role-main i{
+        font-size: 7em;
+        padding-top:0%;
+    }
 }
 /*----------------------------------------*/
 /*          Scrum Eleaning System         */
@@ -1599,3 +1609,28 @@ footer .avatar{
 /*----------------------------------------*/
 /*          Scrum Poker END               */
 /*----------------------------------------*/
+/*----------------------------------------*/
+/*          Final Review START            */
+/*----------------------------------------*/
+.review-mark-write,
+.review-mark-read{
+    max-width: 80px;
+    max-height: 80px;
+    font-size: 3em;
+    border-radius: 50%;
+    text-align: center;
+    border: solid 4px #000;
+    margin-bottom: 1%;
+}
+.review-content{
+    overflow-y: scroll;
+    min-height:20%;
+    max-height:200px;
+    min-width:30%;
+    max-width:40%;
+}
+.review-btn-accept{
+    margin: 0 auto;
+    max-width: 100%;
+    display: block;
+}

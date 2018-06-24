@@ -30,7 +30,7 @@
     var displayProfile = function(index){
         let searchedName = profiles[index]['name']
         document.querySelector('#user-name').innerHTML = profiles[index]['name'];
-        document.getElementById("img_avatar").src="/" + profiles[index]['img'];
+        document.getElementById("img_avatar").src="/media/" + profiles[index]['img'];
 /*        if (isNameOnTheList(searchedName, team_scrum_master) == true){
             alert("Ten to scrum master!");
             document.getElementById("cb_scrum_master").checked=true;

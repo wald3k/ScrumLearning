@@ -1,0 +1,44 @@
+{% extends "generics/course_generic.html" %}
+{% load static %}
+{% block left %}
+	{% if review_type == 'write' %}
+      {% include "includes/header_secondary.html" with section='project_summary'  bullet_point='project_summary_1' %}
+  	{% elif review_type == 'read' %}
+      {% include "includes/header_secondary.html" with section='project_summary'  bullet_point='project_summary_2' %}
+	{% endif %}
+{% endblock %}
+
+{% block right %}
+<div class="user-role-main">
+    <i id="arrow-left" class="ion-arrow-left-c" style="float: left"></i>
+    <i id="arrow-right" class="ion-arrow-right-c" style="float: right"></i>
+    <h1>Review for:</h1>
+    <div id="review-author" class="user-role-name">
+        Annonymous review
+    </div>
+    <div id="section-update">
+	 <textarea class="review-content" id="review-content" rows="4" cols="30" >Sample review goes here...
+	</textarea> 
+    </div>
+	<h4>What's your final mark?</h4>
+	{% if review_type == 'write' %}
+		<input id="review-mark" class="review-mark-write" type="number" name="points" min="1" max="5" step="1">
+  	{% elif review_type == 'read' %}
+		<input id="review-mark" class="review-mark-read" disabled="true" type="number" name="points" min="1" max="5" step="1">
+	{% endif %}
+    {%if users%}
+		<button class="review-btn-accept" id="btn_write">Send reviews to server</button>
+	{% endif%}
+</div>  
+
+
+{% endblock %}
+{% block additional_scripts %}
+<script type="text/javascript">
+/*Grabbibng some global variables here*/
+var reviews = {{ reviews|safe }};
+console.log(reviews);
+
+</script>
+<script src="{% static 'js/final_review.js' %}"></script>
+{% endblock %}

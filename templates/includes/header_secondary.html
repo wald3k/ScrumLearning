@@ -57,9 +57,8 @@
             <div class="{% if section == 'project_summary' %} active {% endif %} menu-item">
               <h4><a href="#">Project Summary</a></h4>
               <ul>
-               <li class="{% if bullet_point == 'project_summary_1' %} active {% endif %}">Final results</a></li>
-               <li class="{% if bullet_point == 'project_summary_2' %} active {% endif %}"><a href="#">Review from teacher</a></li>
-               <li class="{% if bullet_point == 'project_summary_3' %} active {% endif %}"><a href="#">Student opinions</a></li>
+               <li class="{% if bullet_point == 'project_summary_1' %} active {% endif %}"><a href="{% url 'Course:final_review' course.pk 'write' %}">Write  reviews</a></li>
+               <li class="{% if bullet_point == 'project_summary_2' %} active {% endif %}"><a href="{% url 'Course:final_review' course.pk 'read' %}">Read  reviews</a></li>
               </ul>
             </div>
     <!--      End of Section with list of options       -->

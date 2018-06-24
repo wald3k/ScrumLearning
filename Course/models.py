@@ -8,6 +8,7 @@ from Profile.models import Profile
 from django.utils.safestring import mark_safe
 from django.utils import timezone
 from datetime import datetime,timedelta
+from django.core.validators import MinValueValidator,MaxValueValidator
 # Create your models here.
 
 class LearningMaterial(models.Model):
@@ -371,6 +372,7 @@ class Shout(models.Model):
 
 
 class QuizResult(models.Model):
+	"""Holds results of quizes that users attempted to pass."""
 	profile = models.ForeignKey('Profile.Profile', on_delete=models.CASCADE) #remember to add appname before model name.
 	course = models.ForeignKey('Course.Course', on_delete=models.CASCADE) #remember to add appname before model name.
 	quiz = models.ForeignKey('Course.Quiz', on_delete=models.CASCADE) #remember to add appname before model name.
@@ -389,3 +391,16 @@ class QuizResult(models.Model):
 
 	def __str__(self):
 		return str(self.course) +  ", Quiz: " + str(self.quiz.id) + ", User" + self.profile.username + ", Passed: " + str(self.passed)
+
+
+class FinalReview(models.Model):
+	"""Holds reviews that summarize other user's behaviour during course. Each review indicates target profile, text review and mark from 
+	range [1,5]."""
+	course = models.ForeignKey('Course.Course', on_delete=models.CASCADE) #remember to add appname before model name.
+	author = models.ForeignKey('Profile.Profile', on_delete=models.CASCADE,related_name='author') #remember to add appname before model name.
+	target = models.ForeignKey('Profile.Profile', on_delete=models.CASCADE,related_name='target') #remember to add appname before model name.
+	review = models.TextField(blank=True)	
+	mark = models.IntegerField(default=1,validators=[MinValueValidator(1), MaxValueValidator(5)]) #By default set to 0 points.
+
+	def __str__(self):
+		return str(self.author) + " rated " + str(self.target) + " on " + str(self.mark) + " points."

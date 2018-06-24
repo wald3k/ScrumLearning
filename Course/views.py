@@ -8,13 +8,14 @@ from django.core.urlresolvers import reverse #for httpresponseredrect for a name
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 # Create your views here.
-from .models import Program, Course, Story, Shout, Quiz,QuizResult, CHOICES_SPRINT_STATES, Poker_game
+from .models import Program, Course, Story, Shout, Quiz,QuizResult, CHOICES_SPRINT_STATES, Poker_game, FinalReview
 from Profile.models import Profile
 from django.core.paginator import Paginator
 from .forms import StoryForm
 from django.core import serializers #Used i.e. in user roles serialization of profiles.
 from django.db.models import Q #For more advanced queries (and or etc.)
 from functools import reduce
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 @login_required
 def course_choose(request,course_name):
 	context = {}
@@ -766,7 +767,7 @@ def scrum_poker(request, course_pk):
 	return render(request, '2_scrum_poker.html',context)
 
 from rest_framework.response import Response
-from .serializer import StorySerializer
+from .serializer import StorySerializer, FinalReviewSerializer
 
 @login_required
 def scrum_poker_get_stories(request, course_pk):
@@ -859,3 +860,53 @@ def chart():
 	charts['chart_timeline'] = [x for x in range(delta_days)]
 	print("Returned data for charts.")
 	return charts
+
+@login_required
+def final_review(request, course_pk, review_type):
+	print("HI")
+	context = {}
+	course = Course.objects.get(pk=course_pk)
+	context['course'] = course
+	context['review_type'] = review_type
+	user=request.user
+	print(review_type)
+	if (request.method == 'POST'):
+		print("Got post request")
+		new_review = json.loads(request.POST.get('new_review'))
+		print(new_review)
+		author = Profile.objects.get(username = new_review['author'])
+		target = Profile.objects.get(username = new_review['target'])
+		review = new_review['review']
+		mark = int(new_review['mark'])
+		print("Ocena: " + str(mark))
+		added_review = FinalReview.objects.get_or_create(course = course, target = target, author = author)
+		added_review[0].review = review
+		added_review[0].mark = mark
+		added_review[0].save()
+	if(review_type != 'review' and review_type != 'write'):
+		pass
+	if(review_type == 'write'):
+		context['users'] = Profile.objects.filter(course = course).exclude(username=user.username)
+		list_of_users = context['users'][::1]
+		number_of_users = len(list_of_users)
+		reviews = []
+		for i in range(number_of_users):
+			review = FinalReview.objects.get_or_create(course = course, target = list_of_users[i], author = user)
+			print(review)
+			reviews.append(review[0])
+
+		my_serializer = FinalReviewSerializer(reviews, many=True)#many=True is used for serializing multiple objects
+		#print(my_serializer.data) 
+		context['reviews'] =  json.dumps(my_serializer.data)
+		return render(request, 'final_review.html',context)	
+	if(review_type == 'read'):
+		reviews = FinalReview.objects.filter(course = course, target=user)
+		my_serializer = FinalReviewSerializer(reviews, many=True)#many=True is used for serializing multiple objects
+		#print(my_serializer.data) 
+		context['reviews'] =  json.dumps(my_serializer.data)
+		
+		#reviews = serializers.serialize('json', reviews, fields=('author.username','mark'))
+		#context['reviews'] = reviews
+		return render(request, 'final_review.html',context)	
+	return render(request, 'final_review.html',context)
+	#TODO pass a json collection of reviews

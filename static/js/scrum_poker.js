@@ -146,7 +146,7 @@
             cardDivID = '#card' + stories[counter].obliged_voters[i].id;
             pokerCardDiv =  document.querySelector(cardDivID) 
             pokerCardDiv.childNodes[0].innerHTML = voter.username; //Avatar
-            pokerCardDiv.childNodes[1].childNodes[0].src = '/' + voter.avatar;
+            pokerCardDiv.childNodes[1].childNodes[0].src = '' + voter.avatar;
             pokerCardDiv.childNodes[1].childNodes[0].title = voter.username;
 
             if(userId == voter.id){

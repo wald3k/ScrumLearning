@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
-from .models import Program, Course, LearningMaterial, Story, Quiz, QuizResult, Question, Answer, Shout, Estimation,Poker_game
+from .models import Program, Course, LearningMaterial, Story, Quiz, QuizResult, Question, Answer, Shout, Estimation,Poker_game, FinalReview
 
 # Register your models here.
 class ProgramAdmin(admin.ModelAdmin):
@@ -51,6 +51,11 @@ class Poker_gameAdmin(admin.ModelAdmin):
 	class Meta:
 		model=Poker_game
 
+class FinalReviewAdmin(admin.ModelAdmin):
+	class Meta:
+		model=FinalReview
+
+
 
 #Registering Classes in admin panel
 admin.site.register(Program, ProgramAdmin)
@@ -64,4 +69,6 @@ admin.site.register(Answer, AnswerAdmin)
 admin.site.register(Shout, ShoutAdmin)
 admin.site.register(Estimation, EstimationAdmin)
 admin.site.register(Poker_game, Poker_gameAdmin)
+admin.site.register(FinalReview, FinalReviewAdmin)
+
 
